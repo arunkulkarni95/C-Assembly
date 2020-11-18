@@ -1,0 +1,76 @@
+     1                                 %line 1+1 asm2.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 [section .data]
+     9                                 
+    10                                 
+    11                                 
+    12                                 LF equ 10
+    13                                 NULL equ 0
+    14                                 TRUE equ 1
+    15                                 FALSE equ 0
+    16                                 
+    17                                 [section .text]
+    18                                 
+    19                                 [global addByValue]
+    20                                 [global addByReference]
+    21                                 
+    22                                 
+    23                                 
+    24                                 
+    25                                 addByValue:
+    26 00000000 55                     push rbp
+    27 00000001 4889E5                 mov rbp, rsp
+    28                                 
+    29                                 
+    30                                 
+    31                                 
+    32                                 
+    33                                 
+    34                                 
+    35                                 
+    36                                 
+    37                                 
+    38 00000004 4889F8                 mov rax, rdi
+    39 00000007 4801F0                 add rax, rsi
+    40 0000000A 4801D0                 add rax, rdx
+    41 0000000D 4801C8                 add rax, rcx
+    42 00000010 4C01C0                 add rax, r8
+    43 00000013 4C01C8                 add rax, r9
+    44                                 
+    45                                 addByValueDone:
+    46 00000016 5D                     pop rbp
+    47 00000017 C3                     ret
+    48                                 
+    49                                 
+    50                                 
+    51                                 
+    52                                 
+    53                                 
+    54                                 addByReference:
+    55 00000018 55                     push rbp
+    56 00000019 4889E5                 mov rbp, rsp
+    57                                 
+    58                                 
+    59                                 
+    60                                 
+    61                                 
+    62                                 
+    63                                 
+    64                                 
+    65                                 
+    66                                 
+    67 0000001C 4889F8                 mov rax, rdi
+    68 0000001F 4801F0                 add rax, rsi
+    69 00000022 4801D0                 add rax, rdx
+    70 00000025 4801C8                 add rax, rcx
+    71 00000028 490300                 add rax, [r8]
+    72 0000002B 490301                 add rax, [r9]
+    73                                 
+    74                                 addByReferenceDone:
+    75 0000002E 5D                     pop rbp
+    76 0000002F C3                     ret

@@ -1,0 +1,282 @@
+   1              		.file	"lab5.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.section	.rodata
+   6              	.LC0:
+   7 0000 6D616C6C 		.string	"malloc fail"
+   7      6F632066 
+   7      61696C00 
+   8              		.text
+   9              		.globl	main
+  11              	main:
+  12              	.LFB6:
+  13              		.file 1 "lab5.c"
+   1:lab5.c        **** #include <stdio.h>
+   2:lab5.c        **** #include <stdlib.h>
+   3:lab5.c        **** #define SIZE 0x7B
+   4:lab5.c        **** 
+   5:lab5.c        **** int main(int argc, char* argv[]) {
+  14              		.loc 1 5 34
+  15              		.cfi_startproc
+  16 0000 F30F1EFA 		endbr64
+  17 0004 55       		push	rbp
+  18              		.cfi_def_cfa_offset 16
+  19              		.cfi_offset 6, -16
+  20 0005 4889E5   		mov	rbp, rsp
+  21              		.cfi_def_cfa_register 6
+  22 0008 4883EC20 		sub	rsp, 32
+  23 000c 897DEC   		mov	DWORD PTR -20[rbp], edi
+  24 000f 488975E0 		mov	QWORD PTR -32[rbp], rsi
+   6:lab5.c        **** 
+   7:lab5.c        ****     char *cptr; 
+   8:lab5.c        ****     int i;
+   9:lab5.c        **** 
+  10:lab5.c        ****     //allocate 123 bytes for char pointers
+  11:lab5.c        ****     cptr = (char*) malloc(SIZE);
+  25              		.loc 1 11 20
+  26 0013 BF7B0000 		mov	edi, 123
+  26      00
+  27 0018 E8000000 		call	malloc@PLT
+  27      00
+  28 001d 488945F8 		mov	QWORD PTR -8[rbp], rax
+  12:lab5.c        ****     if (!cptr){
+  29              		.loc 1 12 8
+  30 0021 48837DF8 		cmp	QWORD PTR -8[rbp], 0
+  30      00
+  31 0026 751B     		jne	.L2
+  13:lab5.c        ****         printf("malloc fail");
+  32              		.loc 1 13 9
+  33 0028 488D3D00 		lea	rdi, .LC0[rip]
+  33      000000
+  34 002f B8000000 		mov	eax, 0
+  34      00
+  35 0034 E8000000 		call	printf@PLT
+  35      00
+  14:lab5.c        ****         return -1;
+  36              		.loc 1 14 16
+  37 0039 B8FFFFFF 		mov	eax, -1
+  37      FF
+  38 003e E9120100 		jmp	.L3
+  38      00
+  39              	.L2:
+  15:lab5.c        ****     }
+  16:lab5.c        **** 
+  17:lab5.c        ****     //populate cptr
+  18:lab5.c        ****     for (i = 0x00; i < SIZE; i++) {
+  40              		.loc 1 18 12
+  41 0043 C745F400 		mov	DWORD PTR -12[rbp], 0
+  41      000000
+  42              		.loc 1 18 5
+  43 004a EB16     		jmp	.L4
+  44              	.L5:
+  19:lab5.c        ****          *(cptr + i) = i;
+  45              		.loc 1 19 17 discriminator 3
+  46 004c 8B45F4   		mov	eax, DWORD PTR -12[rbp]
+  47 004f 4863D0   		movsx	rdx, eax
+  48 0052 488B45F8 		mov	rax, QWORD PTR -8[rbp]
+  49 0056 4801D0   		add	rax, rdx
+  50              		.loc 1 19 22 discriminator 3
+  51 0059 8B55F4   		mov	edx, DWORD PTR -12[rbp]
+  52 005c 8810     		mov	BYTE PTR [rax], dl
+  18:lab5.c        ****          *(cptr + i) = i;
+  53              		.loc 1 18 31 discriminator 3
+  54 005e 8345F401 		add	DWORD PTR -12[rbp], 1
+  55              	.L4:
+  18:lab5.c        ****          *(cptr + i) = i;
+  56              		.loc 1 18 5 discriminator 1
+  57 0062 837DF47A 		cmp	DWORD PTR -12[rbp], 122
+  58 0066 7EE4     		jle	.L5
+  20:lab5.c        ****     }
+  21:lab5.c        **** 
+  22:lab5.c        ****     //print all chars from 0x30 to 0x7A
+  23:lab5.c        ****     for (i = 0x30; i < SIZE; i++) {
+  59              		.loc 1 23 12
+  60 0068 C745F430 		mov	DWORD PTR -12[rbp], 48
+  60      000000
+  61              		.loc 1 23 5
+  62 006f EB1E     		jmp	.L6
+  63              	.L7:
+  24:lab5.c        ****          printf("%c",*(cptr + i));
+  64              		.loc 1 24 29 discriminator 3
+  65 0071 8B45F4   		mov	eax, DWORD PTR -12[rbp]
+  66 0074 4863D0   		movsx	rdx, eax
+  67 0077 488B45F8 		mov	rax, QWORD PTR -8[rbp]
+  68 007b 4801D0   		add	rax, rdx
+  69              		.loc 1 24 22 discriminator 3
+  70 007e 0FB600   		movzx	eax, BYTE PTR [rax]
+  71              		.loc 1 24 10 discriminator 3
+  72 0081 0FBEC0   		movsx	eax, al
+  73 0084 89C7     		mov	edi, eax
+  74 0086 E8000000 		call	putchar@PLT
+  74      00
+  23:lab5.c        ****          printf("%c",*(cptr + i));
+  75              		.loc 1 23 31 discriminator 3
+  76 008b 8345F401 		add	DWORD PTR -12[rbp], 1
+  77              	.L6:
+  23:lab5.c        ****          printf("%c",*(cptr + i));
+  78              		.loc 1 23 5 discriminator 1
+  79 008f 837DF47A 		cmp	DWORD PTR -12[rbp], 122
+  80 0093 7EDC     		jle	.L7
+  25:lab5.c        ****     }
+  26:lab5.c        ****     
+  27:lab5.c        ****     //print all decimal digits 0 -9 
+  28:lab5.c        ****     printf("\n");
+  81              		.loc 1 28 5
+  82 0095 BF0A0000 		mov	edi, 10
+  82      00
+  83 009a E8000000 		call	putchar@PLT
+  83      00
+  29:lab5.c        ****     for (i = 0x30; i < 0x3A; i++) {
+  84              		.loc 1 29 12
+  85 009f C745F430 		mov	DWORD PTR -12[rbp], 48
+  85      000000
+  86              		.loc 1 29 5
+  87 00a6 EB1E     		jmp	.L8
+  88              	.L9:
+  30:lab5.c        ****          printf("%c",*(cptr + i));
+  89              		.loc 1 30 29 discriminator 3
+  90 00a8 8B45F4   		mov	eax, DWORD PTR -12[rbp]
+  91 00ab 4863D0   		movsx	rdx, eax
+  92 00ae 488B45F8 		mov	rax, QWORD PTR -8[rbp]
+  93 00b2 4801D0   		add	rax, rdx
+  94              		.loc 1 30 22 discriminator 3
+  95 00b5 0FB600   		movzx	eax, BYTE PTR [rax]
+  96              		.loc 1 30 10 discriminator 3
+  97 00b8 0FBEC0   		movsx	eax, al
+  98 00bb 89C7     		mov	edi, eax
+  99 00bd E8000000 		call	putchar@PLT
+  99      00
+  29:lab5.c        ****     for (i = 0x30; i < 0x3A; i++) {
+ 100              		.loc 1 29 31 discriminator 3
+ 101 00c2 8345F401 		add	DWORD PTR -12[rbp], 1
+ 102              	.L8:
+  29:lab5.c        ****     for (i = 0x30; i < 0x3A; i++) {
+ 103              		.loc 1 29 5 discriminator 1
+ 104 00c6 837DF439 		cmp	DWORD PTR -12[rbp], 57
+ 105 00ca 7EDC     		jle	.L9
+  31:lab5.c        ****     }
+  32:lab5.c        **** 
+  33:lab5.c        ****     //print all capital alphabet 
+  34:lab5.c        ****     printf("\n");
+ 106              		.loc 1 34 5
+ 107 00cc BF0A0000 		mov	edi, 10
+ 107      00
+ 108 00d1 E8000000 		call	putchar@PLT
+ 108      00
+  35:lab5.c        ****     for (i = 0x41; i < 0x5B; i++) {
+ 109              		.loc 1 35 12
+ 110 00d6 C745F441 		mov	DWORD PTR -12[rbp], 65
+ 110      000000
+ 111              		.loc 1 35 5
+ 112 00dd EB1E     		jmp	.L10
+ 113              	.L11:
+  36:lab5.c        ****         printf("%c",*(cptr + i));
+ 114              		.loc 1 36 28 discriminator 3
+ 115 00df 8B45F4   		mov	eax, DWORD PTR -12[rbp]
+ 116 00e2 4863D0   		movsx	rdx, eax
+ 117 00e5 488B45F8 		mov	rax, QWORD PTR -8[rbp]
+ 118 00e9 4801D0   		add	rax, rdx
+ 119              		.loc 1 36 21 discriminator 3
+ 120 00ec 0FB600   		movzx	eax, BYTE PTR [rax]
+ 121              		.loc 1 36 9 discriminator 3
+ 122 00ef 0FBEC0   		movsx	eax, al
+ 123 00f2 89C7     		mov	edi, eax
+ 124 00f4 E8000000 		call	putchar@PLT
+ 124      00
+  35:lab5.c        ****     for (i = 0x41; i < 0x5B; i++) {
+ 125              		.loc 1 35 31 discriminator 3
+ 126 00f9 8345F401 		add	DWORD PTR -12[rbp], 1
+ 127              	.L10:
+  35:lab5.c        ****     for (i = 0x41; i < 0x5B; i++) {
+ 128              		.loc 1 35 5 discriminator 1
+ 129 00fd 837DF45A 		cmp	DWORD PTR -12[rbp], 90
+ 130 0101 7EDC     		jle	.L11
+  37:lab5.c        ****     }
+  38:lab5.c        **** 
+  39:lab5.c        ****     //print all small alphabet 
+  40:lab5.c        ****     printf("\n");
+ 131              		.loc 1 40 5
+ 132 0103 BF0A0000 		mov	edi, 10
+ 132      00
+ 133 0108 E8000000 		call	putchar@PLT
+ 133      00
+  41:lab5.c        ****     for (i = 0x61; i < 0x7B; i++) {
+ 134              		.loc 1 41 12
+ 135 010d C745F461 		mov	DWORD PTR -12[rbp], 97
+ 135      000000
+ 136              		.loc 1 41 5
+ 137 0114 EB1E     		jmp	.L12
+ 138              	.L13:
+  42:lab5.c        ****         printf("%c",*(cptr + i));
+ 139              		.loc 1 42 28 discriminator 3
+ 140 0116 8B45F4   		mov	eax, DWORD PTR -12[rbp]
+ 141 0119 4863D0   		movsx	rdx, eax
+ 142 011c 488B45F8 		mov	rax, QWORD PTR -8[rbp]
+ 143 0120 4801D0   		add	rax, rdx
+ 144              		.loc 1 42 21 discriminator 3
+ 145 0123 0FB600   		movzx	eax, BYTE PTR [rax]
+ 146              		.loc 1 42 9 discriminator 3
+ 147 0126 0FBEC0   		movsx	eax, al
+ 148 0129 89C7     		mov	edi, eax
+ 149 012b E8000000 		call	putchar@PLT
+ 149      00
+  41:lab5.c        ****     for (i = 0x61; i < 0x7B; i++) {
+ 150              		.loc 1 41 31 discriminator 3
+ 151 0130 8345F401 		add	DWORD PTR -12[rbp], 1
+ 152              	.L12:
+  41:lab5.c        ****     for (i = 0x61; i < 0x7B; i++) {
+ 153              		.loc 1 41 5 discriminator 1
+ 154 0134 837DF47A 		cmp	DWORD PTR -12[rbp], 122
+ 155 0138 7EDC     		jle	.L13
+  43:lab5.c        ****     }
+  44:lab5.c        **** 
+  45:lab5.c        ****     //free memory
+  46:lab5.c        ****     printf("\n");
+ 156              		.loc 1 46 5
+ 157 013a BF0A0000 		mov	edi, 10
+ 157      00
+ 158 013f E8000000 		call	putchar@PLT
+ 158      00
+  47:lab5.c        ****     free(cptr);
+ 159              		.loc 1 47 5
+ 160 0144 488B45F8 		mov	rax, QWORD PTR -8[rbp]
+ 161 0148 4889C7   		mov	rdi, rax
+ 162 014b E8000000 		call	free@PLT
+ 162      00
+  48:lab5.c        ****     
+  49:lab5.c        ****     return 0;
+ 163              		.loc 1 49 12
+ 164 0150 B8000000 		mov	eax, 0
+ 164      00
+ 165              	.L3:
+  50:lab5.c        **** }
+ 166              		.loc 1 50 1
+ 167 0155 C9       		leave
+ 168              		.cfi_def_cfa 7, 8
+ 169 0156 C3       		ret
+ 170              		.cfi_endproc
+ 171              	.LFE6:
+ 173              	.Letext0:
+ 174              		.file 2 "/usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h"
+ 175              		.file 3 "/usr/include/x86_64-linux-gnu/bits/types.h"
+ 176              		.file 4 "/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h"
+ 177              		.file 5 "/usr/include/x86_64-linux-gnu/bits/types/FILE.h"
+ 178              		.file 6 "/usr/include/stdio.h"
+ 179              		.file 7 "/usr/include/x86_64-linux-gnu/bits/sys_errlist.h"
+ 1014              		.section	.note.gnu.property,"a"
+ 1015              		.align 8
+ 1016 0000 04000000 		.long	 1f - 0f
+ 1017 0004 10000000 		.long	 4f - 1f
+ 1018 0008 05000000 		.long	 5
+ 1019              	0:
+ 1020 000c 474E5500 		.string	 "GNU"
+ 1021              	1:
+ 1022              		.align 8
+ 1023 0010 020000C0 		.long	 0xc0000002
+ 1024 0014 04000000 		.long	 3f - 2f
+ 1025              	2:
+ 1026 0018 03000000 		.long	 0x3
+ 1027              	3:
+ 1028 001c 00000000 		.align 8
+ 1029              	4:

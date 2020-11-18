@@ -1,0 +1,265 @@
+   1              		.file	"casm2.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.section	.rodata
+   6              	.LC0:
+   7 0000 6D616C6C 		.string	"malloc fail"
+   7      6F632066 
+   7      61696C00 
+   8 000c 00000000 		.align 8
+   9              	.LC1:
+  10 0010 0A546869 		.string	"\nThis is adding six 8 byte numbers by value:"
+  10      73206973 
+  10      20616464 
+  10      696E6720 
+  10      73697820 
+  11 003d 000000   		.align 8
+  12              	.LC2:
+  13 0040 52657375 		.string	"Result after addition by value: %lx\n"
+  13      6C742061 
+  13      66746572 
+  13      20616464 
+  13      6974696F 
+  14 0065 000000   		.align 8
+  15              	.LC3:
+  16 0068 0A546869 		.string	"\nThis is adding six 8 byte numbers - 4 by value, and 2 by reference:"
+  16      73206973 
+  16      20616464 
+  16      696E6720 
+  16      73697820 
+  17 00ad 000000   		.align 8
+  18              	.LC4:
+  19 00b0 52657375 		.string	"Result after addition by value and reference: %lx\n\n"
+  19      6C742061 
+  19      66746572 
+  19      20616464 
+  19      6974696F 
+  20              		.text
+  21              		.globl	main
+  23              	main:
+  24              	.LFB6:
+  25              		.file 1 "casm2.c"
+   1:casm2.c       **** #include <stdio.h> 
+   2:casm2.c       **** #include <stdlib.h> 
+   3:casm2.c       **** 
+   4:casm2.c       **** //assembly call prototypes 
+   5:casm2.c       **** 
+   6:casm2.c       **** long addByValue(long v1, long v2, long v3, long v4, long v5, long v6); 
+   7:casm2.c       **** long addByReference(long v1, long v2, long v3, long v4, long *v5, long *v6);
+   8:casm2.c       **** 
+   9:casm2.c       **** int main(int argc, char **argv) 
+  10:casm2.c       **** {
+  26              		.loc 1 10 1
+  27              		.cfi_startproc
+  28 0000 F30F1EFA 		endbr64
+  29 0004 55       		push	rbp
+  30              		.cfi_def_cfa_offset 16
+  31              		.cfi_offset 6, -16
+  32 0005 4889E5   		mov	rbp, rsp
+  33              		.cfi_def_cfa_register 6
+  34 0008 4883EC60 		sub	rsp, 96
+  35 000c 897DAC   		mov	DWORD PTR -84[rbp], edi
+  36 000f 488975A0 		mov	QWORD PTR -96[rbp], rsi
+  11:casm2.c       ****     long val1=0, val2=0, val3=0, val4=0, val5=0, val6=0; 
+  37              		.loc 1 11 10
+  38 0013 48C745B8 		mov	QWORD PTR -72[rbp], 0
+  38      00000000 
+  39              		.loc 1 11 18
+  40 001b 48C745C0 		mov	QWORD PTR -64[rbp], 0
+  40      00000000 
+  41              		.loc 1 11 26
+  42 0023 48C745C8 		mov	QWORD PTR -56[rbp], 0
+  42      00000000 
+  43              		.loc 1 11 34
+  44 002b 48C745D0 		mov	QWORD PTR -48[rbp], 0
+  44      00000000 
+  45              		.loc 1 11 42
+  46 0033 48C745D8 		mov	QWORD PTR -40[rbp], 0
+  46      00000000 
+  47              		.loc 1 11 50
+  48 003b 48C745E0 		mov	QWORD PTR -32[rbp], 0
+  48      00000000 
+  12:casm2.c       ****     long *lptr1, *lptr2;
+  13:casm2.c       ****     long result=0; 
+  49              		.loc 1 13 10
+  50 0043 48C745E8 		mov	QWORD PTR -24[rbp], 0
+  50      00000000 
+  14:casm2.c       ****     int i=0; 
+  51              		.loc 1 14 9
+  52 004b C745B400 		mov	DWORD PTR -76[rbp], 0
+  52      000000
+  15:casm2.c       **** 
+  16:casm2.c       ****     lptr1 = (long*)malloc(8);
+  53              		.loc 1 16 20
+  54 0052 BF080000 		mov	edi, 8
+  54      00
+  55 0057 E8000000 		call	malloc@PLT
+  55      00
+  56 005c 488945F0 		mov	QWORD PTR -16[rbp], rax
+  17:casm2.c       ****     lptr2 = (long*)malloc(8);
+  57              		.loc 1 17 20
+  58 0060 BF080000 		mov	edi, 8
+  58      00
+  59 0065 E8000000 		call	malloc@PLT
+  59      00
+  60 006a 488945F8 		mov	QWORD PTR -8[rbp], rax
+  18:casm2.c       **** 
+  19:casm2.c       ****     if(!lptr1 || !lptr2){
+  61              		.loc 1 19 7
+  62 006e 48837DF0 		cmp	QWORD PTR -16[rbp], 0
+  62      00
+  63 0073 7407     		je	.L2
+  64              		.loc 1 19 15 discriminator 1
+  65 0075 48837DF8 		cmp	QWORD PTR -8[rbp], 0
+  65      00
+  66 007a 751B     		jne	.L3
+  67              	.L2:
+  20:casm2.c       ****         printf("malloc fail");
+  68              		.loc 1 20 9
+  69 007c 488D3D00 		lea	rdi, .LC0[rip]
+  69      000000
+  70 0083 B8000000 		mov	eax, 0
+  70      00
+  71 0088 E8000000 		call	printf@PLT
+  71      00
+  21:casm2.c       ****         return -1;
+  72              		.loc 1 21 16
+  73 008d B8FFFFFF 		mov	eax, -1
+  73      FF
+  74 0092 E9DB0000 		jmp	.L4
+  74      00
+  75              	.L3:
+  22:casm2.c       ****     }
+  23:casm2.c       **** 
+  24:casm2.c       ****     val1  = 0x0111111111111111; 
+  76              		.loc 1 24 11
+  77 0097 48B81111 		movabs	rax, 76861433640456465
+  77      11111111 
+  77      1101
+  78 00a1 488945B8 		mov	QWORD PTR -72[rbp], rax
+  25:casm2.c       ****     val2  = 0x0111111111111111; 
+  79              		.loc 1 25 11
+  80 00a5 488945C0 		mov	QWORD PTR -64[rbp], rax
+  26:casm2.c       ****     val3  = 0x0111111111111111; 
+  81              		.loc 1 26 11
+  82 00a9 488945C8 		mov	QWORD PTR -56[rbp], rax
+  27:casm2.c       ****     val4  = 0x0111111111111111; 
+  83              		.loc 1 27 11
+  84 00ad 488945D0 		mov	QWORD PTR -48[rbp], rax
+  28:casm2.c       ****     val5  = 0x0111111111111111; 
+  85              		.loc 1 28 11
+  86 00b1 488945D8 		mov	QWORD PTR -40[rbp], rax
+  29:casm2.c       ****     val6  = 0x0111111111111111; 
+  87              		.loc 1 29 11
+  88 00b5 488945E0 		mov	QWORD PTR -32[rbp], rax
+  30:casm2.c       **** 
+  31:casm2.c       ****     *lptr1  = 0x0222222222222222;
+  89              		.loc 1 31 13
+  90 00b9 488B45F0 		mov	rax, QWORD PTR -16[rbp]
+  91 00bd 48BA2222 		movabs	rdx, 153722867280912930
+  91      22222222 
+  91      2202
+  92 00c7 488910   		mov	QWORD PTR [rax], rdx
+  32:casm2.c       ****     *lptr2  = 0x0222222222222222;
+  93              		.loc 1 32 13
+  94 00ca 488B45F8 		mov	rax, QWORD PTR -8[rbp]
+  95 00ce 488910   		mov	QWORD PTR [rax], rdx
+  33:casm2.c       **** 
+  34:casm2.c       ****     printf("\nThis is adding six 8 byte numbers by value:\n"); 
+  96              		.loc 1 34 5
+  97 00d1 488D3D00 		lea	rdi, .LC1[rip]
+  97      000000
+  98 00d8 E8000000 		call	puts@PLT
+  98      00
+  35:casm2.c       ****     result = addByValue(val1, val2, val3, val4, val5, val6); 
+  99              		.loc 1 35 14
+ 100 00dd 4C8B45E0 		mov	r8, QWORD PTR -32[rbp]
+ 101 00e1 488B7DD8 		mov	rdi, QWORD PTR -40[rbp]
+ 102 00e5 488B4DD0 		mov	rcx, QWORD PTR -48[rbp]
+ 103 00e9 488B55C8 		mov	rdx, QWORD PTR -56[rbp]
+ 104 00ed 488B75C0 		mov	rsi, QWORD PTR -64[rbp]
+ 105 00f1 488B45B8 		mov	rax, QWORD PTR -72[rbp]
+ 106 00f5 4D89C1   		mov	r9, r8
+ 107 00f8 4989F8   		mov	r8, rdi
+ 108 00fb 4889C7   		mov	rdi, rax
+ 109 00fe E8000000 		call	addByValue@PLT
+ 109      00
+ 110 0103 488945E8 		mov	QWORD PTR -24[rbp], rax
+  36:casm2.c       ****     printf("Result after addition by value: %lx\n", result); 
+ 111              		.loc 1 36 5
+ 112 0107 488B45E8 		mov	rax, QWORD PTR -24[rbp]
+ 113 010b 4889C6   		mov	rsi, rax
+ 114 010e 488D3D00 		lea	rdi, .LC2[rip]
+ 114      000000
+ 115 0115 B8000000 		mov	eax, 0
+ 115      00
+ 116 011a E8000000 		call	printf@PLT
+ 116      00
+  37:casm2.c       **** 
+  38:casm2.c       ****     printf("\nThis is adding six 8 byte numbers - 4 by value, and 2 by reference:\n");
+ 117              		.loc 1 38 5
+ 118 011f 488D3D00 		lea	rdi, .LC3[rip]
+ 118      000000
+ 119 0126 E8000000 		call	puts@PLT
+ 119      00
+  39:casm2.c       ****     result = addByReference(val1, val2, val3, val4, lptr1, lptr2);
+ 120              		.loc 1 39 14
+ 121 012b 4C8B45F8 		mov	r8, QWORD PTR -8[rbp]
+ 122 012f 488B7DF0 		mov	rdi, QWORD PTR -16[rbp]
+ 123 0133 488B4DD0 		mov	rcx, QWORD PTR -48[rbp]
+ 124 0137 488B55C8 		mov	rdx, QWORD PTR -56[rbp]
+ 125 013b 488B75C0 		mov	rsi, QWORD PTR -64[rbp]
+ 126 013f 488B45B8 		mov	rax, QWORD PTR -72[rbp]
+ 127 0143 4D89C1   		mov	r9, r8
+ 128 0146 4989F8   		mov	r8, rdi
+ 129 0149 4889C7   		mov	rdi, rax
+ 130 014c E8000000 		call	addByReference@PLT
+ 130      00
+ 131 0151 488945E8 		mov	QWORD PTR -24[rbp], rax
+  40:casm2.c       ****     printf("Result after addition by value and reference: %lx\n\n",result);
+ 132              		.loc 1 40 5
+ 133 0155 488B45E8 		mov	rax, QWORD PTR -24[rbp]
+ 134 0159 4889C6   		mov	rsi, rax
+ 135 015c 488D3D00 		lea	rdi, .LC4[rip]
+ 135      000000
+ 136 0163 B8000000 		mov	eax, 0
+ 136      00
+ 137 0168 E8000000 		call	printf@PLT
+ 137      00
+  41:casm2.c       **** 
+  42:casm2.c       ****     return 0; 
+ 138              		.loc 1 42 12
+ 139 016d B8000000 		mov	eax, 0
+ 139      00
+ 140              	.L4:
+  43:casm2.c       **** }
+ 141              		.loc 1 43 1
+ 142 0172 C9       		leave
+ 143              		.cfi_def_cfa 7, 8
+ 144 0173 C3       		ret
+ 145              		.cfi_endproc
+ 146              	.LFE6:
+ 148              	.Letext0:
+ 149              		.file 2 "/usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h"
+ 150              		.file 3 "/usr/include/x86_64-linux-gnu/bits/types.h"
+ 151              		.file 4 "/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h"
+ 152              		.file 5 "/usr/include/x86_64-linux-gnu/bits/types/FILE.h"
+ 153              		.file 6 "/usr/include/stdio.h"
+ 154              		.file 7 "/usr/include/x86_64-linux-gnu/bits/sys_errlist.h"
+ 1080              		.section	.note.gnu.property,"a"
+ 1081              		.align 8
+ 1082 0000 04000000 		.long	 1f - 0f
+ 1083 0004 10000000 		.long	 4f - 1f
+ 1084 0008 05000000 		.long	 5
+ 1085              	0:
+ 1086 000c 474E5500 		.string	 "GNU"
+ 1087              	1:
+ 1088              		.align 8
+ 1089 0010 020000C0 		.long	 0xc0000002
+ 1090 0014 04000000 		.long	 3f - 2f
+ 1091              	2:
+ 1092 0018 03000000 		.long	 0x3
+ 1093              	3:
+ 1094 001c 00000000 		.align 8
+ 1095              	4:

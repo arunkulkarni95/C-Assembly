@@ -1,0 +1,244 @@
+   1              		.file	"lab2.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.section	.rodata
+   6              	.LC0:
+   7 0000 50726F67 		.string	"Program Name: %s"
+   7      72616D20 
+   7      4E616D65 
+   7      3A202573 
+   7      00
+   8 0011 00000000 		.align 8
+   8      000000
+   9              	.LC1:
+  10 0018 0A4E6F20 		.string	"\nNo parameters passed other than program name."
+  10      70617261 
+  10      6D657465 
+  10      72732070 
+  10      61737365 
+  11 0047 00       		.align 8
+  12              	.LC2:
+  13 0048 0A4E756D 		.string	"\nNumber of argumentd passed: %d\n"
+  13      62657220 
+  13      6F662061 
+  13      7267756D 
+  13      656E7464 
+  14 0069 00000000 		.align 8
+  14      000000
+  15              	.LC3:
+  16 0070 0A436F6D 		.string	"\nCommand line arguments passed (other tan program name):"
+  16      6D616E64 
+  16      206C696E 
+  16      65206172 
+  16      67756D65 
+  17              	.LC4:
+  18 00a9 0A417320 		.string	"\nAs integers:"
+  18      696E7465 
+  18      67657273 
+  18      3A00
+  19              	.LC5:
+  20 00b7 0A617267 		.string	"\nargv[%d]: %d\n"
+  20      765B2564 
+  20      5D3A2025 
+  20      640A00
+  21              	.LC6:
+  22 00c6 0A417320 		.string	"\nAs strings:"
+  22      73747269 
+  22      6E67733A 
+  22      00
+  23              	.LC7:
+  24 00d3 0A617267 		.string	"\nargv[%d]: %s\n"
+  24      765B2564 
+  24      5D3A2025 
+  24      730A00
+  25              		.text
+  26              		.globl	main
+  28              	main:
+  29              	.LFB6:
+  30              		.file 1 "lab2.c"
+   1:lab2.c        **** #include <stdio.h>
+   2:lab2.c        **** #include <stdlib.h>
+   3:lab2.c        **** 
+   4:lab2.c        **** int main(int argc, char* argv[]){
+  31              		.loc 1 4 33
+  32              		.cfi_startproc
+  33 0000 F30F1EFA 		endbr64
+  34 0004 55       		push	rbp
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 6, -16
+  37 0005 4889E5   		mov	rbp, rsp
+  38              		.cfi_def_cfa_register 6
+  39 0008 4883EC20 		sub	rsp, 32
+  40 000c 897DEC   		mov	DWORD PTR -20[rbp], edi
+  41 000f 488975E0 		mov	QWORD PTR -32[rbp], rsi
+   5:lab2.c        **** 	int count;
+   6:lab2.c        **** 	printf("Program Name: %s", argv[0]);
+  42              		.loc 1 6 2
+  43 0013 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+  44 0017 488B00   		mov	rax, QWORD PTR [rax]
+  45 001a 4889C6   		mov	rsi, rax
+  46 001d 488D3D00 		lea	rdi, .LC0[rip]
+  46      000000
+  47 0024 B8000000 		mov	eax, 0
+  47      00
+  48 0029 E8000000 		call	printf@PLT
+  48      00
+   7:lab2.c        **** 	if(argc == 1){
+  49              		.loc 1 7 4
+  50 002e 837DEC01 		cmp	DWORD PTR -20[rbp], 1
+  51 0032 750C     		jne	.L2
+   8:lab2.c        **** 		printf("\nNo parameters passed other than program name.\n");
+  52              		.loc 1 8 3
+  53 0034 488D3D00 		lea	rdi, .LC1[rip]
+  53      000000
+  54 003b E8000000 		call	puts@PLT
+  54      00
+  55              	.L2:
+   9:lab2.c        **** 	}
+  10:lab2.c        **** 	if(argc >= 2){
+  56              		.loc 1 10 4
+  57 0040 837DEC01 		cmp	DWORD PTR -20[rbp], 1
+  58 0044 0F8EC800 		jle	.L3
+  58      0000
+  11:lab2.c        **** 		printf("\nNumber of argumentd passed: %d\n",argc);
+  59              		.loc 1 11 3
+  60 004a 8B45EC   		mov	eax, DWORD PTR -20[rbp]
+  61 004d 89C6     		mov	esi, eax
+  62 004f 488D3D00 		lea	rdi, .LC2[rip]
+  62      000000
+  63 0056 B8000000 		mov	eax, 0
+  63      00
+  64 005b E8000000 		call	printf@PLT
+  64      00
+  12:lab2.c        **** 		printf("\nCommand line arguments passed (other tan program name):\n");
+  65              		.loc 1 12 3
+  66 0060 488D3D00 		lea	rdi, .LC3[rip]
+  66      000000
+  67 0067 E8000000 		call	puts@PLT
+  67      00
+  13:lab2.c        **** 		
+  14:lab2.c        **** 		printf("\nAs integers:\n");
+  68              		.loc 1 14 3
+  69 006c 488D3D00 		lea	rdi, .LC4[rip]
+  69      000000
+  70 0073 E8000000 		call	puts@PLT
+  70      00
+  15:lab2.c        **** 		for(count = 1; count < argc; count++){
+  71              		.loc 1 15 13
+  72 0078 C745FC01 		mov	DWORD PTR -4[rbp], 1
+  72      000000
+  73              		.loc 1 15 3
+  74 007f EB3B     		jmp	.L4
+  75              	.L5:
+  16:lab2.c        **** 			printf("\nargv[%d]: %d\n",count,atoi(argv[count]));
+  76              		.loc 1 16 45 discriminator 3
+  77 0081 8B45FC   		mov	eax, DWORD PTR -4[rbp]
+  78 0084 4898     		cdqe
+  79 0086 488D14C5 		lea	rdx, 0[0+rax*8]
+  79      00000000 
+  80 008e 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+  81 0092 4801D0   		add	rax, rdx
+  82              		.loc 1 16 4 discriminator 3
+  83 0095 488B00   		mov	rax, QWORD PTR [rax]
+  84 0098 4889C7   		mov	rdi, rax
+  85 009b E8000000 		call	atoi@PLT
+  85      00
+  86 00a0 89C2     		mov	edx, eax
+  87 00a2 8B45FC   		mov	eax, DWORD PTR -4[rbp]
+  88 00a5 89C6     		mov	esi, eax
+  89 00a7 488D3D00 		lea	rdi, .LC5[rip]
+  89      000000
+  90 00ae B8000000 		mov	eax, 0
+  90      00
+  91 00b3 E8000000 		call	printf@PLT
+  91      00
+  15:lab2.c        **** 		for(count = 1; count < argc; count++){
+  92              		.loc 1 15 37 discriminator 3
+  93 00b8 8345FC01 		add	DWORD PTR -4[rbp], 1
+  94              	.L4:
+  15:lab2.c        **** 		for(count = 1; count < argc; count++){
+  95              		.loc 1 15 3 discriminator 1
+  96 00bc 8B45FC   		mov	eax, DWORD PTR -4[rbp]
+  97 00bf 3B45EC   		cmp	eax, DWORD PTR -20[rbp]
+  98 00c2 7CBD     		jl	.L5
+  17:lab2.c        **** 		}
+  18:lab2.c        **** 		
+  19:lab2.c        **** 		printf("\nAs strings:\n");
+  99              		.loc 1 19 3
+ 100 00c4 488D3D00 		lea	rdi, .LC6[rip]
+ 100      000000
+ 101 00cb E8000000 		call	puts@PLT
+ 101      00
+  20:lab2.c        **** 		for(count = 1; count < argc; count++){
+ 102              		.loc 1 20 13
+ 103 00d0 C745FC01 		mov	DWORD PTR -4[rbp], 1
+ 103      000000
+ 104              		.loc 1 20 3
+ 105 00d7 EB31     		jmp	.L6
+ 106              	.L7:
+  21:lab2.c        **** 			printf("\nargv[%d]: %s\n",count,argv[count]);
+ 107              		.loc 1 21 40 discriminator 3
+ 108 00d9 8B45FC   		mov	eax, DWORD PTR -4[rbp]
+ 109 00dc 4898     		cdqe
+ 110 00de 488D14C5 		lea	rdx, 0[0+rax*8]
+ 110      00000000 
+ 111 00e6 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+ 112 00ea 4801D0   		add	rax, rdx
+ 113              		.loc 1 21 4 discriminator 3
+ 114 00ed 488B10   		mov	rdx, QWORD PTR [rax]
+ 115 00f0 8B45FC   		mov	eax, DWORD PTR -4[rbp]
+ 116 00f3 89C6     		mov	esi, eax
+ 117 00f5 488D3D00 		lea	rdi, .LC7[rip]
+ 117      000000
+ 118 00fc B8000000 		mov	eax, 0
+ 118      00
+ 119 0101 E8000000 		call	printf@PLT
+ 119      00
+  20:lab2.c        **** 		for(count = 1; count < argc; count++){
+ 120              		.loc 1 20 37 discriminator 3
+ 121 0106 8345FC01 		add	DWORD PTR -4[rbp], 1
+ 122              	.L6:
+  20:lab2.c        **** 		for(count = 1; count < argc; count++){
+ 123              		.loc 1 20 3 discriminator 1
+ 124 010a 8B45FC   		mov	eax, DWORD PTR -4[rbp]
+ 125 010d 3B45EC   		cmp	eax, DWORD PTR -20[rbp]
+ 126 0110 7CC7     		jl	.L7
+ 127              	.L3:
+  22:lab2.c        **** 		}
+  23:lab2.c        **** 		
+  24:lab2.c        **** 	}
+  25:lab2.c        **** 	return 0;
+ 128              		.loc 1 25 9
+ 129 0112 B8000000 		mov	eax, 0
+ 129      00
+  26:lab2.c        **** }
+ 130              		.loc 1 26 1
+ 131 0117 C9       		leave
+ 132              		.cfi_def_cfa 7, 8
+ 133 0118 C3       		ret
+ 134              		.cfi_endproc
+ 135              	.LFE6:
+ 137              	.Letext0:
+ 138              		.file 2 "/usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h"
+ 139              		.file 3 "/usr/include/x86_64-linux-gnu/bits/types.h"
+ 140              		.file 4 "/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h"
+ 141              		.file 5 "/usr/include/x86_64-linux-gnu/bits/types/FILE.h"
+ 142              		.file 6 "/usr/include/stdio.h"
+ 143              		.file 7 "/usr/include/x86_64-linux-gnu/bits/sys_errlist.h"
+ 952              		.section	.note.gnu.property,"a"
+ 953              		.align 8
+ 954 0000 04000000 		.long	 1f - 0f
+ 955 0004 10000000 		.long	 4f - 1f
+ 956 0008 05000000 		.long	 5
+ 957              	0:
+ 958 000c 474E5500 		.string	 "GNU"
+ 959              	1:
+ 960              		.align 8
+ 961 0010 020000C0 		.long	 0xc0000002
+ 962 0014 04000000 		.long	 3f - 2f
+ 963              	2:
+ 964 0018 03000000 		.long	 0x3
+ 965              	3:
+ 966 001c 00000000 		.align 8
+ 967              	4:

@@ -1,0 +1,394 @@
+   1              		.file	"lab3.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.section	.rodata
+   6              	.LC0:
+   7 0000 57726F6E 		.string	"Wrong number of parameters."
+   7      67206E75 
+   7      6D626572 
+   7      206F6620 
+   7      70617261 
+   8              	.LC1:
+   9 001c 46697273 		.string	"First parameter not C or F."
+   9      74207061 
+   9      72616D65 
+   9      74657220 
+   9      6E6F7420 
+  10              		.align 8
+  11              	.LC2:
+  12 0038 5365636F 		.string	"Second paramater not a number."
+  12      6E642070 
+  12      6172616D 
+  12      61746572 
+  12      206E6F74 
+  13 0057 00       		.align 8
+  14              	.LC3:
+  15 0058 506C6561 		.string	"Please enter C or F followed by a number."
+  15      73652065 
+  15      6E746572 
+  15      2043206F 
+  15      72204620 
+  16 0082 00000000 		.align 8
+  16      0000
+  17              	.LC6:
+  18 0088 54686973 		.string	"This is equal to %f degrees Celsius.\n"
+  18      20697320 
+  18      65717561 
+  18      6C20746F 
+  18      20256620 
+  19 00ae 0000     		.align 8
+  20              	.LC8:
+  21 00b0 54686973 		.string	"This is equal to %f degrees Fahrenheit.\n"
+  21      20697320 
+  21      65717561 
+  21      6C20746F 
+  21      20256620 
+  22              		.text
+  23              		.globl	main
+  25              	main:
+  26              	.LFB6:
+  27              		.file 1 "lab3.c"
+   1:lab3.c        **** #include <stdio.h>
+   2:lab3.c        **** #include <stdlib.h>
+   3:lab3.c        **** #include <string.h>
+   4:lab3.c        **** #include <ctype.h>
+   5:lab3.c        **** 
+   6:lab3.c        **** int main(int argc, char* argv[]){
+  28              		.loc 1 6 33
+  29              		.cfi_startproc
+  30 0000 F30F1EFA 		endbr64
+  31 0004 55       		push	rbp
+  32              		.cfi_def_cfa_offset 16
+  33              		.cfi_offset 6, -16
+  34 0005 4889E5   		mov	rbp, rsp
+  35              		.cfi_def_cfa_register 6
+  36 0008 4883EC20 		sub	rsp, 32
+  37 000c 897DEC   		mov	DWORD PTR -20[rbp], edi
+  38 000f 488975E0 		mov	QWORD PTR -32[rbp], rsi
+   7:lab3.c        **** 	
+   8:lab3.c        **** 	float result;
+   9:lab3.c        **** 
+  10:lab3.c        **** 	if(argc != 3){
+  39              		.loc 1 10 4
+  40 0013 837DEC03 		cmp	DWORD PTR -20[rbp], 3
+  41 0017 7416     		je	.L2
+  11:lab3.c        **** 		printf("Wrong number of parameters.\n");
+  42              		.loc 1 11 3
+  43 0019 488D3D00 		lea	rdi, .LC0[rip]
+  43      000000
+  44 0020 E8000000 		call	puts@PLT
+  44      00
+  12:lab3.c        **** 		return -1;
+  45              		.loc 1 12 10
+  46 0025 B8FFFFFF 		mov	eax, -1
+  46      FF
+  47 002a E9DC0100 		jmp	.L3
+  47      00
+  48              	.L2:
+  13:lab3.c        **** 	}
+  14:lab3.c        **** 
+  15:lab3.c        **** 	if(*argv[1] != 'C' && *argv[1] != 'c' && *argv[1] != 'F' && *argv[1] != 'f'){
+  49              		.loc 1 15 10
+  50 002f 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+  51 0033 4883C008 		add	rax, 8
+  52 0037 488B00   		mov	rax, QWORD PTR [rax]
+  53              		.loc 1 15 5
+  54 003a 0FB600   		movzx	eax, BYTE PTR [rax]
+  55              		.loc 1 15 4
+  56 003d 3C43     		cmp	al, 67
+  57 003f 744C     		je	.L4
+  58              		.loc 1 15 29 discriminator 1
+  59 0041 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+  60 0045 4883C008 		add	rax, 8
+  61 0049 488B00   		mov	rax, QWORD PTR [rax]
+  62              		.loc 1 15 24 discriminator 1
+  63 004c 0FB600   		movzx	eax, BYTE PTR [rax]
+  64              		.loc 1 15 21 discriminator 1
+  65 004f 3C63     		cmp	al, 99
+  66 0051 743A     		je	.L4
+  67              		.loc 1 15 48 discriminator 2
+  68 0053 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+  69 0057 4883C008 		add	rax, 8
+  70 005b 488B00   		mov	rax, QWORD PTR [rax]
+  71              		.loc 1 15 43 discriminator 2
+  72 005e 0FB600   		movzx	eax, BYTE PTR [rax]
+  73              		.loc 1 15 40 discriminator 2
+  74 0061 3C46     		cmp	al, 70
+  75 0063 7428     		je	.L4
+  76              		.loc 1 15 67 discriminator 3
+  77 0065 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+  78 0069 4883C008 		add	rax, 8
+  79 006d 488B00   		mov	rax, QWORD PTR [rax]
+  80              		.loc 1 15 62 discriminator 3
+  81 0070 0FB600   		movzx	eax, BYTE PTR [rax]
+  82              		.loc 1 15 59 discriminator 3
+  83 0073 3C66     		cmp	al, 102
+  84 0075 7416     		je	.L4
+  16:lab3.c        **** 		printf("First parameter not C or F.\n");
+  85              		.loc 1 16 3
+  86 0077 488D3D00 		lea	rdi, .LC1[rip]
+  86      000000
+  87 007e E8000000 		call	puts@PLT
+  87      00
+  17:lab3.c        **** 		return -1;
+  88              		.loc 1 17 10
+  89 0083 B8FFFFFF 		mov	eax, -1
+  89      FF
+  90 0088 E97E0100 		jmp	.L3
+  90      00
+  91              	.L4:
+  18:lab3.c        **** 	}
+  19:lab3.c        **** 	
+  20:lab3.c        **** 	int len = strlen(argv[2]);
+  92              		.loc 1 20 23
+  93 008d 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+  94 0091 4883C010 		add	rax, 16
+  95              		.loc 1 20 12
+  96 0095 488B00   		mov	rax, QWORD PTR [rax]
+  97 0098 4889C7   		mov	rdi, rax
+  98 009b E8000000 		call	strlen@PLT
+  98      00
+  99              		.loc 1 20 6
+ 100 00a0 8945F8   		mov	DWORD PTR -8[rbp], eax
+  21:lab3.c        **** 
+  22:lab3.c        **** 	if(len > 0){
+ 101              		.loc 1 22 4
+ 102 00a3 837DF800 		cmp	DWORD PTR -8[rbp], 0
+ 103 00a7 7E65     		jle	.L5
+ 104              	.LBB2:
+  23:lab3.c        **** 		for(int i = 1; i < len; ++i){
+ 105              		.loc 1 23 11
+ 106 00a9 C745F401 		mov	DWORD PTR -12[rbp], 1
+ 106      000000
+ 107              		.loc 1 23 3
+ 108 00b0 EB52     		jmp	.L6
+ 109              	.L8:
+  24:lab3.c        **** 			if(!isdigit(argv[2][i])){
+ 110              		.loc 1 24 8
+ 111 00b2 E8000000 		call	__ctype_b_loc@PLT
+ 111      00
+ 112 00b7 488B00   		mov	rax, QWORD PTR [rax]
+ 113 00ba 488B55E0 		mov	rdx, QWORD PTR -32[rbp]
+ 114 00be 4883C210 		add	rdx, 16
+ 115 00c2 488B0A   		mov	rcx, QWORD PTR [rdx]
+ 116 00c5 8B55F4   		mov	edx, DWORD PTR -12[rbp]
+ 117 00c8 4863D2   		movsx	rdx, edx
+ 118 00cb 4801CA   		add	rdx, rcx
+ 119 00ce 0FB612   		movzx	edx, BYTE PTR [rdx]
+ 120 00d1 480FBED2 		movsx	rdx, dl
+ 121 00d5 4801D2   		add	rdx, rdx
+ 122 00d8 4801D0   		add	rax, rdx
+ 123 00db 0FB700   		movzx	eax, WORD PTR [rax]
+ 124 00de 0FB7C0   		movzx	eax, ax
+ 125 00e1 25000800 		and	eax, 2048
+ 125      00
+ 126              		.loc 1 24 6
+ 127 00e6 85C0     		test	eax, eax
+ 128 00e8 7516     		jne	.L7
+  25:lab3.c        **** 				printf("Second paramater not a number.\n");
+ 129              		.loc 1 25 5
+ 130 00ea 488D3D00 		lea	rdi, .LC2[rip]
+ 130      000000
+ 131 00f1 E8000000 		call	puts@PLT
+ 131      00
+  26:lab3.c        **** 				return -1;
+ 132              		.loc 1 26 12
+ 133 00f6 B8FFFFFF 		mov	eax, -1
+ 133      FF
+ 134 00fb E90B0100 		jmp	.L3
+ 134      00
+ 135              	.L7:
+  23:lab3.c        **** 			if(!isdigit(argv[2][i])){
+ 136              		.loc 1 23 27 discriminator 2
+ 137 0100 8345F401 		add	DWORD PTR -12[rbp], 1
+ 138              	.L6:
+  23:lab3.c        **** 			if(!isdigit(argv[2][i])){
+ 139              		.loc 1 23 3 discriminator 1
+ 140 0104 8B45F4   		mov	eax, DWORD PTR -12[rbp]
+ 141 0107 3B45F8   		cmp	eax, DWORD PTR -8[rbp]
+ 142 010a 7CA6     		jl	.L8
+ 143 010c EB16     		jmp	.L14
+ 144              	.L5:
+ 145              	.LBE2:
+  27:lab3.c        **** 			}
+  28:lab3.c        **** 		}
+  29:lab3.c        **** 	}	
+  30:lab3.c        **** 	else{
+  31:lab3.c        **** 		printf("Please enter C or F followed by a number.\n");
+ 146              		.loc 1 31 3
+ 147 010e 488D3D00 		lea	rdi, .LC3[rip]
+ 147      000000
+ 148 0115 E8000000 		call	puts@PLT
+ 148      00
+  32:lab3.c        **** 		return -1;
+ 149              		.loc 1 32 10
+ 150 011a B8FFFFFF 		mov	eax, -1
+ 150      FF
+ 151 011f E9E70000 		jmp	.L3
+ 151      00
+ 152              	.L14:
+  33:lab3.c        **** 	}
+  34:lab3.c        **** 
+  35:lab3.c        **** 	if(*argv[1] == 'F' || *argv[1] == 'f'){
+ 153              		.loc 1 35 10
+ 154 0124 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+ 155 0128 4883C008 		add	rax, 8
+ 156 012c 488B00   		mov	rax, QWORD PTR [rax]
+ 157              		.loc 1 35 5
+ 158 012f 0FB600   		movzx	eax, BYTE PTR [rax]
+ 159              		.loc 1 35 4
+ 160 0132 3C46     		cmp	al, 70
+ 161 0134 7412     		je	.L10
+ 162              		.loc 1 35 29 discriminator 1
+ 163 0136 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+ 164 013a 4883C008 		add	rax, 8
+ 165 013e 488B00   		mov	rax, QWORD PTR [rax]
+ 166              		.loc 1 35 24 discriminator 1
+ 167 0141 0FB600   		movzx	eax, BYTE PTR [rax]
+ 168              		.loc 1 35 21 discriminator 1
+ 169 0144 3C66     		cmp	al, 102
+ 170 0146 7550     		jne	.L11
+ 171              	.L10:
+  36:lab3.c        **** 		result = (atof(argv[2]) - 32.0) * (5.0/9.0);
+ 172              		.loc 1 36 22
+ 173 0148 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+ 174 014c 4883C010 		add	rax, 16
+ 175              		.loc 1 36 13
+ 176 0150 488B00   		mov	rax, QWORD PTR [rax]
+ 177 0153 4889C7   		mov	rdi, rax
+ 178 0156 E8000000 		call	atof@PLT
+ 178      00
+ 179              		.loc 1 36 27
+ 180 015b F20F100D 		movsd	xmm1, QWORD PTR .LC4[rip]
+ 180      00000000 
+ 181 0163 F20F5CC1 		subsd	xmm0, xmm1
+ 182 0167 660F28C8 		movapd	xmm1, xmm0
+ 183              		.loc 1 36 35
+ 184 016b F20F1005 		movsd	xmm0, QWORD PTR .LC5[rip]
+ 184      00000000 
+ 185 0173 F20F59C1 		mulsd	xmm0, xmm1
+ 186              		.loc 1 36 10
+ 187 0177 F20F5AC0 		cvtsd2ss	xmm0, xmm0
+ 188 017b F30F1145 		movss	DWORD PTR -4[rbp], xmm0
+ 188      FC
+  37:lab3.c        **** 		printf("This is equal to %f degrees Celsius.\n",result);
+ 189              		.loc 1 37 3
+ 190 0180 F30F5A45 		cvtss2sd	xmm0, DWORD PTR -4[rbp]
+ 190      FC
+ 191 0185 488D3D00 		lea	rdi, .LC6[rip]
+ 191      000000
+ 192 018c B8010000 		mov	eax, 1
+ 192      00
+ 193 0191 E8000000 		call	printf@PLT
+ 193      00
+ 194 0196 EB6E     		jmp	.L12
+ 195              	.L11:
+  38:lab3.c        **** 	}
+  39:lab3.c        **** 	else if(*argv[1] == 'C' || *argv[1] == 'c'){
+ 196              		.loc 1 39 15
+ 197 0198 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+ 198 019c 4883C008 		add	rax, 8
+ 199 01a0 488B00   		mov	rax, QWORD PTR [rax]
+ 200              		.loc 1 39 10
+ 201 01a3 0FB600   		movzx	eax, BYTE PTR [rax]
+ 202              		.loc 1 39 9
+ 203 01a6 3C43     		cmp	al, 67
+ 204 01a8 7412     		je	.L13
+ 205              		.loc 1 39 34 discriminator 1
+ 206 01aa 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+ 207 01ae 4883C008 		add	rax, 8
+ 208 01b2 488B00   		mov	rax, QWORD PTR [rax]
+ 209              		.loc 1 39 29 discriminator 1
+ 210 01b5 0FB600   		movzx	eax, BYTE PTR [rax]
+ 211              		.loc 1 39 26 discriminator 1
+ 212 01b8 3C63     		cmp	al, 99
+ 213 01ba 754A     		jne	.L12
+ 214              	.L13:
+  40:lab3.c        **** 		result = (atof(argv[2]) * (9.0/5.0)) + 32.0;
+ 215              		.loc 1 40 22
+ 216 01bc 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+ 217 01c0 4883C010 		add	rax, 16
+ 218              		.loc 1 40 13
+ 219 01c4 488B00   		mov	rax, QWORD PTR [rax]
+ 220 01c7 4889C7   		mov	rdi, rax
+ 221 01ca E8000000 		call	atof@PLT
+ 221      00
+ 222              		.loc 1 40 27
+ 223 01cf F20F100D 		movsd	xmm1, QWORD PTR .LC7[rip]
+ 223      00000000 
+ 224 01d7 F20F59C8 		mulsd	xmm1, xmm0
+ 225              		.loc 1 40 40
+ 226 01db F20F1005 		movsd	xmm0, QWORD PTR .LC4[rip]
+ 226      00000000 
+ 227 01e3 F20F58C1 		addsd	xmm0, xmm1
+ 228              		.loc 1 40 10
+ 229 01e7 F20F5AC0 		cvtsd2ss	xmm0, xmm0
+ 230 01eb F30F1145 		movss	DWORD PTR -4[rbp], xmm0
+ 230      FC
+  41:lab3.c        **** 		printf("This is equal to %f degrees Fahrenheit.\n",result);
+ 231              		.loc 1 41 3
+ 232 01f0 F30F5A45 		cvtss2sd	xmm0, DWORD PTR -4[rbp]
+ 232      FC
+ 233 01f5 488D3D00 		lea	rdi, .LC8[rip]
+ 233      000000
+ 234 01fc B8010000 		mov	eax, 1
+ 234      00
+ 235 0201 E8000000 		call	printf@PLT
+ 235      00
+ 236              	.L12:
+  42:lab3.c        **** 	}
+  43:lab3.c        **** 
+  44:lab3.c        **** 
+  45:lab3.c        **** 	
+  46:lab3.c        **** 	return 0;
+ 237              		.loc 1 46 9
+ 238 0206 B8000000 		mov	eax, 0
+ 238      00
+ 239              	.L3:
+  47:lab3.c        **** }
+ 240              		.loc 1 47 1
+ 241 020b C9       		leave
+ 242              		.cfi_def_cfa 7, 8
+ 243 020c C3       		ret
+ 244              		.cfi_endproc
+ 245              	.LFE6:
+ 247              		.section	.rodata
+ 248 00d9 00000000 		.align 8
+ 248      000000
+ 249              	.LC4:
+ 250 00e0 00000000 		.long	0
+ 251 00e4 00004040 		.long	1077936128
+ 252              		.align 8
+ 253              	.LC5:
+ 254 00e8 721CC771 		.long	1908874354
+ 255 00ec 1CC7E13F 		.long	1071761180
+ 256              		.align 8
+ 257              	.LC7:
+ 258 00f0 CDCCCCCC 		.long	3435973837
+ 259 00f4 CCCCFC3F 		.long	1073532108
+ 260              		.text
+ 261              	.Letext0:
+ 262              		.file 2 "/usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h"
+ 263              		.file 3 "/usr/include/x86_64-linux-gnu/bits/types.h"
+ 264              		.file 4 "/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h"
+ 265              		.file 5 "/usr/include/x86_64-linux-gnu/bits/types/FILE.h"
+ 266              		.file 6 "/usr/include/stdio.h"
+ 267              		.file 7 "/usr/include/x86_64-linux-gnu/bits/sys_errlist.h"
+ 268              		.file 8 "/usr/include/ctype.h"
+ 1237              		.section	.note.gnu.property,"a"
+ 1238              		.align 8
+ 1239 0000 04000000 		.long	 1f - 0f
+ 1240 0004 10000000 		.long	 4f - 1f
+ 1241 0008 05000000 		.long	 5
+ 1242              	0:
+ 1243 000c 474E5500 		.string	 "GNU"
+ 1244              	1:
+ 1245              		.align 8
+ 1246 0010 020000C0 		.long	 0xc0000002
+ 1247 0014 04000000 		.long	 3f - 2f
+ 1248              	2:
+ 1249 0018 03000000 		.long	 0x3
+ 1250              	3:
+ 1251 001c 00000000 		.align 8
+ 1252              	4:

@@ -1,0 +1,324 @@
+   1              		.file	"lab6.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.section	.rodata
+   6              		.align 8
+   7              	.LC0:
+   8 0000 416C6C6F 		.string	"Allocating 4 bytes for iptr..."
+   8      63617469 
+   8      6E672034 
+   8      20627974 
+   8      65732066 
+   9 001f 00       		.align 8
+  10              	.LC1:
+  11 0020 416C6C6F 		.string	"Allocating 32 bytes for lptr..."
+  11      63617469 
+  11      6E672033 
+  11      32206279 
+  11      74657320 
+  12              	.LC2:
+  13 0040 6D616C6C 		.string	"malloc fail"
+  13      6F632066 
+  13      61696C00 
+  14              	.LC3:
+  15 004c 0A416464 		.string	"\nAddress of iptr:"
+  15      72657373 
+  15      206F6620 
+  15      69707472 
+  15      3A00
+  16              	.LC4:
+  17 005e 25700A00 		.string	"%p\n"
+  18              	.LC5:
+  19 0062 0A416464 		.string	"\nAddress of lptr:"
+  19      72657373 
+  19      206F6620 
+  19      6C707472 
+  19      3A00
+  20 0074 00000000 		.align 8
+  21              	.LC6:
+  22 0078 0A456E74 		.string	"\nEnter 4 integers one at a time, followed by the Enter key:"
+  22      65722034 
+  22      20696E74 
+  22      65676572 
+  22      73206F6E 
+  23              	.LC7:
+  24 00b4 256C6400 		.string	"%ld"
+  25              		.align 8
+  26              	.LC8:
+  27 00b8 496E636F 		.string	"Incorrect value entered. Try again.\n "
+  27      72726563 
+  27      74207661 
+  27      6C756520 
+  27      656E7465 
+  28 00de 0000     		.align 8
+  29              	.LC10:
+  30 00e0 0A417665 		.string	"\nAverage of the 4 longs: %.2lf\n"
+  30      72616765 
+  30      206F6620 
+  30      74686520 
+  30      34206C6F 
+  31              		.text
+  32              		.globl	main
+  34              	main:
+  35              	.LFB6:
+  36              		.file 1 "lab6.c"
+   1:lab6.c        **** #include <stdio.h>
+   2:lab6.c        **** #include <stdlib.h>
+   3:lab6.c        **** 
+   4:lab6.c        **** int main (int argc, char* argv[]){
+  37              		.loc 1 4 34
+  38              		.cfi_startproc
+  39 0000 F30F1EFA 		endbr64
+  40 0004 55       		push	rbp
+  41              		.cfi_def_cfa_offset 16
+  42              		.cfi_offset 6, -16
+  43 0005 4889E5   		mov	rbp, rsp
+  44              		.cfi_def_cfa_register 6
+  45 0008 4883EC50 		sub	rsp, 80
+  46 000c 897DBC   		mov	DWORD PTR -68[rbp], edi
+  47 000f 488975B0 		mov	QWORD PTR -80[rbp], rsi
+  48              		.loc 1 4 34
+  49 0013 64488B04 		mov	rax, QWORD PTR fs:40
+  49      25280000 
+  49      00
+  50 001c 488945F8 		mov	QWORD PTR -8[rbp], rax
+  51 0020 31C0     		xor	eax, eax
+   5:lab6.c        **** 
+   6:lab6.c        ****     int *iptr;
+   7:lab6.c        ****     long *lptr;
+   8:lab6.c        ****     int i;
+   9:lab6.c        ****     long sum = 0;
+  52              		.loc 1 9 10
+  53 0022 48C745E8 		mov	QWORD PTR -24[rbp], 0
+  53      00000000 
+  10:lab6.c        ****     long num;
+  11:lab6.c        ****     double avg;
+  12:lab6.c        **** 
+  13:lab6.c        ****     printf("Allocating 4 bytes for iptr...\n");
+  54              		.loc 1 13 5
+  55 002a 488D3D00 		lea	rdi, .LC0[rip]
+  55      000000
+  56 0031 E8000000 		call	puts@PLT
+  56      00
+  14:lab6.c        ****     printf("Allocating 32 bytes for lptr...\n");
+  57              		.loc 1 14 5
+  58 0036 488D3D00 		lea	rdi, .LC1[rip]
+  58      000000
+  59 003d E8000000 		call	puts@PLT
+  59      00
+  15:lab6.c        ****     iptr = (int*) malloc(4);
+  60              		.loc 1 15 19
+  61 0042 BF040000 		mov	edi, 4
+  61      00
+  62 0047 E8000000 		call	malloc@PLT
+  62      00
+  63              		.loc 1 15 10
+  64 004c 488945D0 		mov	QWORD PTR -48[rbp], rax
+  16:lab6.c        ****     lptr = (long*) malloc(32);
+  65              		.loc 1 16 20
+  66 0050 BF200000 		mov	edi, 32
+  66      00
+  67 0055 E8000000 		call	malloc@PLT
+  67      00
+  68              		.loc 1 16 10
+  69 005a 488945D8 		mov	QWORD PTR -40[rbp], rax
+  17:lab6.c        ****     if(!iptr || !lptr){
+  70              		.loc 1 17 8
+  71 005e 488B45D0 		mov	rax, QWORD PTR -48[rbp]
+  72              		.loc 1 17 7
+  73 0062 4885C0   		test	rax, rax
+  74 0065 7409     		je	.L2
+  75              		.loc 1 17 17 discriminator 1
+  76 0067 488B45D8 		mov	rax, QWORD PTR -40[rbp]
+  77              		.loc 1 17 14 discriminator 1
+  78 006b 4885C0   		test	rax, rax
+  79 006e 751B     		jne	.L3
+  80              	.L2:
+  18:lab6.c        ****         printf("malloc fail");
+  81              		.loc 1 18 9
+  82 0070 488D3D00 		lea	rdi, .LC2[rip]
+  82      000000
+  83 0077 B8000000 		mov	eax, 0
+  83      00
+  84 007c E8000000 		call	printf@PLT
+  84      00
+  19:lab6.c        ****         return -1;
+  85              		.loc 1 19 16
+  86 0081 B8FFFFFF 		mov	eax, -1
+  86      FF
+  87 0086 E9DE0000 		jmp	.L8
+  87      00
+  88              	.L3:
+  20:lab6.c        ****     }
+  21:lab6.c        **** 
+  22:lab6.c        ****     //print address space for iptr
+  23:lab6.c        ****     printf("\nAddress of iptr:\n");
+  89              		.loc 1 23 5
+  90 008b 488D3D00 		lea	rdi, .LC3[rip]
+  90      000000
+  91 0092 E8000000 		call	puts@PLT
+  91      00
+  24:lab6.c        ****     printf("%p\n",(void*)&iptr);
+  92              		.loc 1 24 5
+  93 0097 488D45D0 		lea	rax, -48[rbp]
+  94 009b 4889C6   		mov	rsi, rax
+  95 009e 488D3D00 		lea	rdi, .LC4[rip]
+  95      000000
+  96 00a5 B8000000 		mov	eax, 0
+  96      00
+  97 00aa E8000000 		call	printf@PLT
+  97      00
+  25:lab6.c        ****     
+  26:lab6.c        ****     //print address space for lptr
+  27:lab6.c        ****     printf("\nAddress of lptr:\n");
+  98              		.loc 1 27 5
+  99 00af 488D3D00 		lea	rdi, .LC5[rip]
+  99      000000
+ 100 00b6 E8000000 		call	puts@PLT
+ 100      00
+  28:lab6.c        ****     printf("%p\n",(void*)&lptr);
+ 101              		.loc 1 28 5
+ 102 00bb 488D45D8 		lea	rax, -40[rbp]
+ 103 00bf 4889C6   		mov	rsi, rax
+ 104 00c2 488D3D00 		lea	rdi, .LC4[rip]
+ 104      000000
+ 105 00c9 B8000000 		mov	eax, 0
+ 105      00
+ 106 00ce E8000000 		call	printf@PLT
+ 106      00
+  29:lab6.c        ****     
+  30:lab6.c        ****     printf("\nEnter 4 integers one at a time, followed by the Enter key:\n");
+ 107              		.loc 1 30 5
+ 108 00d3 488D3D00 		lea	rdi, .LC6[rip]
+ 108      000000
+ 109 00da E8000000 		call	puts@PLT
+ 109      00
+  31:lab6.c        **** 
+  32:lab6.c        ****     for (i = 0; i < 4; i++){		
+ 110              		.loc 1 32 12
+ 111 00df C745C800 		mov	DWORD PTR -56[rbp], 0
+ 111      000000
+ 112              		.loc 1 32 5
+ 113 00e6 EB45     		jmp	.L5
+ 114              	.L7:
+ 115              	.LBB2:
+  33:lab6.c        **** 	    int s = scanf("%ld",&num);
+ 116              		.loc 1 33 14
+ 117 00e8 488D45E0 		lea	rax, -32[rbp]
+ 118 00ec 4889C6   		mov	rsi, rax
+ 119 00ef 488D3D00 		lea	rdi, .LC7[rip]
+ 119      000000
+ 120 00f6 B8000000 		mov	eax, 0
+ 120      00
+ 121 00fb E8000000 		call	__isoc99_scanf@PLT
+ 121      00
+ 122 0100 8945CC   		mov	DWORD PTR -52[rbp], eax
+  34:lab6.c        **** 	    if ( s != 1){
+ 123              		.loc 1 34 9
+ 124 0103 837DCC01 		cmp	DWORD PTR -52[rbp], 1
+ 125 0107 7418     		je	.L6
+  35:lab6.c        ****             printf("Incorrect value entered. Try again.\n ");
+ 126              		.loc 1 35 13
+ 127 0109 488D3D00 		lea	rdi, .LC8[rip]
+ 127      000000
+ 128 0110 B8000000 		mov	eax, 0
+ 128      00
+ 129 0115 E8000000 		call	printf@PLT
+ 129      00
+  36:lab6.c        ****             return -1;
+ 130              		.loc 1 36 20
+ 131 011a B8FFFFFF 		mov	eax, -1
+ 131      FF
+ 132 011f EB48     		jmp	.L8
+ 133              	.L6:
+  37:lab6.c        **** 	    }
+  38:lab6.c        **** 			
+  39:lab6.c        **** 		sum += num;
+ 134              		.loc 1 39 7 discriminator 2
+ 135 0121 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+ 136 0125 480145E8 		add	QWORD PTR -24[rbp], rax
+ 137              	.LBE2:
+  32:lab6.c        **** 	    int s = scanf("%ld",&num);
+ 138              		.loc 1 32 25 discriminator 2
+ 139 0129 8345C801 		add	DWORD PTR -56[rbp], 1
+ 140              	.L5:
+  32:lab6.c        **** 	    int s = scanf("%ld",&num);
+ 141              		.loc 1 32 5 discriminator 1
+ 142 012d 837DC803 		cmp	DWORD PTR -56[rbp], 3
+ 143 0131 7EB5     		jle	.L7
+  40:lab6.c        **** 	}
+  41:lab6.c        **** 
+  42:lab6.c        ****     avg = sum / 4.0;
+ 144              		.loc 1 42 15
+ 145 0133 F2480F2A 		cvtsi2sd	xmm0, QWORD PTR -24[rbp]
+ 145      45E8
+ 146              		.loc 1 42 9
+ 147 0139 F20F100D 		movsd	xmm1, QWORD PTR .LC9[rip]
+ 147      00000000 
+ 148 0141 F20F5EC1 		divsd	xmm0, xmm1
+ 149 0145 F20F1145 		movsd	QWORD PTR -16[rbp], xmm0
+ 149      F0
+  43:lab6.c        ****     printf("\nAverage of the 4 longs: %.2lf\n",avg);
+ 150              		.loc 1 43 5
+ 151 014a 488B45F0 		mov	rax, QWORD PTR -16[rbp]
+ 152 014e 66480F6E 		movq	xmm0, rax
+ 152      C0
+ 153 0153 488D3D00 		lea	rdi, .LC10[rip]
+ 153      000000
+ 154 015a B8010000 		mov	eax, 1
+ 154      00
+ 155 015f E8000000 		call	printf@PLT
+ 155      00
+  44:lab6.c        **** 
+  45:lab6.c        ****     return 0;
+ 156              		.loc 1 45 12
+ 157 0164 B8000000 		mov	eax, 0
+ 157      00
+ 158              	.L8:
+  46:lab6.c        **** 
+  47:lab6.c        **** }
+ 159              		.loc 1 47 1 discriminator 1
+ 160 0169 488B55F8 		mov	rdx, QWORD PTR -8[rbp]
+ 161 016d 64483314 		xor	rdx, QWORD PTR fs:40
+ 161      25280000 
+ 161      00
+ 162 0176 7405     		je	.L9
+ 163              		.loc 1 47 1 is_stmt 0
+ 164 0178 E8000000 		call	__stack_chk_fail@PLT
+ 164      00
+ 165              	.L9:
+ 166 017d C9       		leave
+ 167              		.cfi_def_cfa 7, 8
+ 168 017e C3       		ret
+ 169              		.cfi_endproc
+ 170              	.LFE6:
+ 172              		.section	.rodata
+ 173              		.align 8
+ 174              	.LC9:
+ 175 0100 00000000 		.long	0
+ 176 0104 00001040 		.long	1074790400
+ 177              		.text
+ 178              	.Letext0:
+ 179              		.file 2 "/usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h"
+ 180              		.file 3 "/usr/include/x86_64-linux-gnu/bits/types.h"
+ 181              		.file 4 "/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h"
+ 182              		.file 5 "/usr/include/x86_64-linux-gnu/bits/types/FILE.h"
+ 183              		.file 6 "/usr/include/stdio.h"
+ 184              		.file 7 "/usr/include/x86_64-linux-gnu/bits/sys_errlist.h"
+ 1091              		.section	.note.gnu.property,"a"
+ 1092              		.align 8
+ 1093 0000 04000000 		.long	 1f - 0f
+ 1094 0004 10000000 		.long	 4f - 1f
+ 1095 0008 05000000 		.long	 5
+ 1096              	0:
+ 1097 000c 474E5500 		.string	 "GNU"
+ 1098              	1:
+ 1099              		.align 8
+ 1100 0010 020000C0 		.long	 0xc0000002
+ 1101 0014 04000000 		.long	 3f - 2f
+ 1102              	2:
+ 1103 0018 03000000 		.long	 0x3
+ 1104              	3:
+ 1105 001c 00000000 		.align 8
+ 1106              	4:

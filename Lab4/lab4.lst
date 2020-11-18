@@ -1,0 +1,212 @@
+   1              		.file	"lab4.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.section	.rodata
+   6              		.align 8
+   7              	.LC1:
+   8 0000 54686973 		.string	"This program will compute the average of 10 integers."
+   8      2070726F 
+   8      6772616D 
+   8      2077696C 
+   8      6C20636F 
+   9 0036 0000     		.align 8
+  10              	.LC2:
+  11 0038 456E7465 		.string	"Enter 10 integers one at a time, followed by the  Enter key:"
+  11      72203130 
+  11      20696E74 
+  11      65676572 
+  11      73206F6E 
+  12              	.LC3:
+  13 0075 256400   		.string	"%d"
+  14              		.align 8
+  15              	.LC4:
+  16 0078 496E636F 		.string	"Incorrect value entered. Try again.\n "
+  16      72726563 
+  16      74207661 
+  16      6C756520 
+  16      656E7465 
+  17 009e 0000     		.align 8
+  18              	.LC6:
+  19 00a0 54686520 		.string	"The average of the 10 integers is: %f\n"
+  19      61766572 
+  19      61676520 
+  19      6F662074 
+  19      68652031 
+  20              		.text
+  21              		.globl	main
+  23              	main:
+  24              	.LFB6:
+  25              		.file 1 "lab4.c"
+   1:lab4.c        **** #include <stdio.h>
+   2:lab4.c        **** #include <string.h>
+   3:lab4.c        **** #include <stdlib.h>
+   4:lab4.c        **** #include <ctype.h>
+   5:lab4.c        **** 
+   6:lab4.c        **** int main(int argc, char* argv[]){
+  26              		.loc 1 6 33
+  27              		.cfi_startproc
+  28 0000 F30F1EFA 		endbr64
+  29 0004 55       		push	rbp
+  30              		.cfi_def_cfa_offset 16
+  31              		.cfi_offset 6, -16
+  32 0005 4889E5   		mov	rbp, rsp
+  33              		.cfi_def_cfa_register 6
+  34 0008 4883EC30 		sub	rsp, 48
+  35 000c 897DDC   		mov	DWORD PTR -36[rbp], edi
+  36 000f 488975D0 		mov	QWORD PTR -48[rbp], rsi
+  37              		.loc 1 6 33
+  38 0013 64488B04 		mov	rax, QWORD PTR fs:40
+  38      25280000 
+  38      00
+  39 001c 488945F8 		mov	QWORD PTR -8[rbp], rax
+  40 0020 31C0     		xor	eax, eax
+   7:lab4.c        **** 	
+   8:lab4.c        **** 	int num;
+   9:lab4.c        **** 	int sum = 0;
+  41              		.loc 1 9 6
+  42 0022 C745E800 		mov	DWORD PTR -24[rbp], 0
+  42      000000
+  10:lab4.c        **** 	float avg = 0.0;
+  43              		.loc 1 10 8
+  44 0029 660FEFC0 		pxor	xmm0, xmm0
+  45 002d F30F1145 		movss	DWORD PTR -16[rbp], xmm0
+  45      F0
+  11:lab4.c        **** 	int i,s;
+  12:lab4.c        **** 
+  13:lab4.c        **** 	printf("This program will compute the average of 10 integers.\n");
+  46              		.loc 1 13 2
+  47 0032 488D3D00 		lea	rdi, .LC1[rip]
+  47      000000
+  48 0039 E8000000 		call	puts@PLT
+  48      00
+  14:lab4.c        **** 	printf("Enter 10 integers one at a time, followed by the  Enter key:\n");
+  49              		.loc 1 14 2
+  50 003e 488D3D00 		lea	rdi, .LC2[rip]
+  50      000000
+  51 0045 E8000000 		call	puts@PLT
+  51      00
+  15:lab4.c        **** 
+  16:lab4.c        **** 	for (i = 0; i < 10; i++){		
+  52              		.loc 1 16 9
+  53 004a C745EC00 		mov	DWORD PTR -20[rbp], 0
+  53      000000
+  54              		.loc 1 16 2
+  55 0051 EB43     		jmp	.L2
+  56              	.L5:
+  17:lab4.c        **** 		s = scanf("%d",&num);
+  57              		.loc 1 17 7
+  58 0053 488D45E4 		lea	rax, -28[rbp]
+  59 0057 4889C6   		mov	rsi, rax
+  60 005a 488D3D00 		lea	rdi, .LC3[rip]
+  60      000000
+  61 0061 B8000000 		mov	eax, 0
+  61      00
+  62 0066 E8000000 		call	__isoc99_scanf@PLT
+  62      00
+  63 006b 8945F4   		mov	DWORD PTR -12[rbp], eax
+  18:lab4.c        **** 		if ( s != 1){
+  64              		.loc 1 18 6
+  65 006e 837DF401 		cmp	DWORD PTR -12[rbp], 1
+  66 0072 7418     		je	.L3
+  19:lab4.c        **** 			printf("Incorrect value entered. Try again.\n ");
+  67              		.loc 1 19 4
+  68 0074 488D3D00 		lea	rdi, .LC4[rip]
+  68      000000
+  69 007b B8000000 		mov	eax, 0
+  69      00
+  70 0080 E8000000 		call	printf@PLT
+  70      00
+  20:lab4.c        ****             return -1;
+  71              		.loc 1 20 20
+  72 0085 B8FFFFFF 		mov	eax, -1
+  72      FF
+  73 008a EB45     		jmp	.L6
+  74              	.L3:
+  21:lab4.c        **** 		}
+  22:lab4.c        **** 			
+  23:lab4.c        **** 		sum += num;
+  75              		.loc 1 23 7 discriminator 2
+  76 008c 8B45E4   		mov	eax, DWORD PTR -28[rbp]
+  77 008f 0145E8   		add	DWORD PTR -24[rbp], eax
+  16:lab4.c        **** 		s = scanf("%d",&num);
+  78              		.loc 1 16 23 discriminator 2
+  79 0092 8345EC01 		add	DWORD PTR -20[rbp], 1
+  80              	.L2:
+  16:lab4.c        **** 		s = scanf("%d",&num);
+  81              		.loc 1 16 2 discriminator 1
+  82 0096 837DEC09 		cmp	DWORD PTR -20[rbp], 9
+  83 009a 7EB7     		jle	.L5
+  24:lab4.c        **** 
+  25:lab4.c        **** 	}
+  26:lab4.c        **** 	avg = sum / 10.0;
+  84              		.loc 1 26 12
+  85 009c F20F2A45 		cvtsi2sd	xmm0, DWORD PTR -24[rbp]
+  85      E8
+  86 00a1 F20F100D 		movsd	xmm1, QWORD PTR .LC5[rip]
+  86      00000000 
+  87 00a9 F20F5EC1 		divsd	xmm0, xmm1
+  88              		.loc 1 26 6
+  89 00ad F20F5AC0 		cvtsd2ss	xmm0, xmm0
+  90 00b1 F30F1145 		movss	DWORD PTR -16[rbp], xmm0
+  90      F0
+  27:lab4.c        **** 	printf("The average of the 10 integers is: %f\n",avg);
+  91              		.loc 1 27 2
+  92 00b6 F30F5A45 		cvtss2sd	xmm0, DWORD PTR -16[rbp]
+  92      F0
+  93 00bb 488D3D00 		lea	rdi, .LC6[rip]
+  93      000000
+  94 00c2 B8010000 		mov	eax, 1
+  94      00
+  95 00c7 E8000000 		call	printf@PLT
+  95      00
+  28:lab4.c        ****     return 0;
+  96              		.loc 1 28 12
+  97 00cc B8000000 		mov	eax, 0
+  97      00
+  98              	.L6:
+  29:lab4.c        **** }
+  99              		.loc 1 29 1 discriminator 1
+ 100 00d1 488B55F8 		mov	rdx, QWORD PTR -8[rbp]
+ 101 00d5 64483314 		xor	rdx, QWORD PTR fs:40
+ 101      25280000 
+ 101      00
+ 102 00de 7405     		je	.L7
+ 103              		.loc 1 29 1 is_stmt 0
+ 104 00e0 E8000000 		call	__stack_chk_fail@PLT
+ 104      00
+ 105              	.L7:
+ 106 00e5 C9       		leave
+ 107              		.cfi_def_cfa 7, 8
+ 108 00e6 C3       		ret
+ 109              		.cfi_endproc
+ 110              	.LFE6:
+ 112              		.section	.rodata
+ 113 00c7 00       		.align 8
+ 114              	.LC5:
+ 115 00c8 00000000 		.long	0
+ 116 00cc 00002440 		.long	1076101120
+ 117              		.text
+ 118              	.Letext0:
+ 119              		.file 2 "/usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h"
+ 120              		.file 3 "/usr/include/x86_64-linux-gnu/bits/types.h"
+ 121              		.file 4 "/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h"
+ 122              		.file 5 "/usr/include/x86_64-linux-gnu/bits/types/FILE.h"
+ 123              		.file 6 "/usr/include/stdio.h"
+ 124              		.file 7 "/usr/include/x86_64-linux-gnu/bits/sys_errlist.h"
+ 973              		.section	.note.gnu.property,"a"
+ 974              		.align 8
+ 975 0000 04000000 		.long	 1f - 0f
+ 976 0004 10000000 		.long	 4f - 1f
+ 977 0008 05000000 		.long	 5
+ 978              	0:
+ 979 000c 474E5500 		.string	 "GNU"
+ 980              	1:
+ 981              		.align 8
+ 982 0010 020000C0 		.long	 0xc0000002
+ 983 0014 04000000 		.long	 3f - 2f
+ 984              	2:
+ 985 0018 03000000 		.long	 0x3
+ 986              	3:
+ 987 001c 00000000 		.align 8
+ 988              	4:

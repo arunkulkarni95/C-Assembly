@@ -1,0 +1,458 @@
+   1              		.file	"lab7.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.globl	numSwaps
+   6              		.bss
+   7              		.align 4
+  10              	numSwaps:
+  11 0000 00000000 		.zero	4
+  12              		.section	.rodata
+  13              	.LC0:
+  14 0000 556E736F 		.string	"Unsorted integers:"
+  14      72746564 
+  14      20696E74 
+  14      65676572 
+  14      733A00
+  15              	.LC1:
+  16 0013 536F7274 		.string	"Sorted integers:"
+  16      65642069 
+  16      6E746567 
+  16      6572733A 
+  16      00
+  17              	.LC2:
+  18 0024 4E756D62 		.string	"Number of swaps: %d\n"
+  18      6572206F 
+  18      66207377 
+  18      6170733A 
+  18      2025640A 
+  19              		.text
+  20              		.globl	main
+  22              	main:
+  23              	.LFB6:
+  24              		.file 1 "lab7.c"
+   1:lab7.c        **** #include <stdio.h>
+   2:lab7.c        **** #include <stdlib.h>
+   3:lab7.c        **** #include <time.h>
+   4:lab7.c        **** 
+   5:lab7.c        **** void swap(int *x, int *y);
+   6:lab7.c        **** void bubbleArray(int arr[], int n);
+   7:lab7.c        **** void printArray(int arr[], int n);
+   8:lab7.c        **** 
+   9:lab7.c        **** int numSwaps = 0;
+  10:lab7.c        **** 
+  11:lab7.c        **** int main(int argc, char* argv[]){
+  25              		.loc 1 11 33
+  26              		.cfi_startproc
+  27 0000 F30F1EFA 		endbr64
+  28 0004 55       		push	rbp
+  29              		.cfi_def_cfa_offset 16
+  30              		.cfi_offset 6, -16
+  31 0005 4889E5   		mov	rbp, rsp
+  32              		.cfi_def_cfa_register 6
+  33 0008 4881ECC0 		sub	rsp, 448
+  33      010000
+  34 000f 89BD4CFE 		mov	DWORD PTR -436[rbp], edi
+  34      FFFF
+  35 0015 4889B540 		mov	QWORD PTR -448[rbp], rsi
+  35      FEFFFF
+  36              		.loc 1 11 33
+  37 001c 64488B04 		mov	rax, QWORD PTR fs:40
+  37      25280000 
+  37      00
+  38 0025 488945F8 		mov	QWORD PTR -8[rbp], rax
+  39 0029 31C0     		xor	eax, eax
+  12:lab7.c        ****     int arr[100];
+  13:lab7.c        ****     srand(time(0));
+  40              		.loc 1 13 11
+  41 002b BF000000 		mov	edi, 0
+  41      00
+  42 0030 E8000000 		call	time@PLT
+  42      00
+  43              		.loc 1 13 5
+  44 0035 89C7     		mov	edi, eax
+  45 0037 E8000000 		call	srand@PLT
+  45      00
+  46              	.LBB2:
+  14:lab7.c        **** 
+  15:lab7.c        ****     for (int i = 0; i < 100; i++){
+  47              		.loc 1 15 14
+  48 003c C7855CFE 		mov	DWORD PTR -420[rbp], 0
+  48      FFFF0000 
+  48      0000
+  49              		.loc 1 15 5
+  50 0046 EB3D     		jmp	.L2
+  51              	.L3:
+  16:lab7.c        ****         arr[i] = (rand() % 1000);
+  52              		.loc 1 16 19 discriminator 3
+  53 0048 E8000000 		call	rand@PLT
+  53      00
+  54              		.loc 1 16 26 discriminator 3
+  55 004d 4863D0   		movsx	rdx, eax
+  56 0050 4869D2D3 		imul	rdx, rdx, 274877907
+  56      4D6210
+  57 0057 48C1EA20 		shr	rdx, 32
+  58 005b 89D1     		mov	ecx, edx
+  59 005d C1F906   		sar	ecx, 6
+  60 0060 99       		cdq
+  61 0061 29D1     		sub	ecx, edx
+  62 0063 89CA     		mov	edx, ecx
+  63 0065 69D2E803 		imul	edx, edx, 1000
+  63      0000
+  64 006b 29D0     		sub	eax, edx
+  65 006d 89C2     		mov	edx, eax
+  66              		.loc 1 16 16 discriminator 3
+  67 006f 8B855CFE 		mov	eax, DWORD PTR -420[rbp]
+  67      FFFF
+  68 0075 4898     		cdqe
+  69 0077 89948560 		mov	DWORD PTR -416[rbp+rax*4], edx
+  69      FEFFFF
+  15:lab7.c        ****         arr[i] = (rand() % 1000);
+  70              		.loc 1 15 31 discriminator 3
+  71 007e 83855CFE 		add	DWORD PTR -420[rbp], 1
+  71      FFFF01
+  72              	.L2:
+  15:lab7.c        ****         arr[i] = (rand() % 1000);
+  73              		.loc 1 15 5 discriminator 1
+  74 0085 83BD5CFE 		cmp	DWORD PTR -420[rbp], 99
+  74      FFFF63
+  75 008c 7EBA     		jle	.L3
+  76              	.LBE2:
+  17:lab7.c        ****     }
+  18:lab7.c        ****     
+  19:lab7.c        ****     printf("Unsorted integers:\n");
+  77              		.loc 1 19 5
+  78 008e 488D3D00 		lea	rdi, .LC0[rip]
+  78      000000
+  79 0095 E8000000 		call	puts@PLT
+  79      00
+  20:lab7.c        ****     printArray(arr, 100);
+  80              		.loc 1 20 5
+  81 009a 488D8560 		lea	rax, -416[rbp]
+  81      FEFFFF
+  82 00a1 BE640000 		mov	esi, 100
+  82      00
+  83 00a6 4889C7   		mov	rdi, rax
+  84 00a9 E8000000 		call	printArray
+  84      00
+  21:lab7.c        **** 
+  22:lab7.c        ****     bubbleArray(arr, 100);
+  85              		.loc 1 22 5
+  86 00ae 488D8560 		lea	rax, -416[rbp]
+  86      FEFFFF
+  87 00b5 BE640000 		mov	esi, 100
+  87      00
+  88 00ba 4889C7   		mov	rdi, rax
+  89 00bd E8000000 		call	bubbleArray
+  89      00
+  23:lab7.c        **** 
+  24:lab7.c        ****     printf("Sorted integers:\n");
+  90              		.loc 1 24 5
+  91 00c2 488D3D00 		lea	rdi, .LC1[rip]
+  91      000000
+  92 00c9 E8000000 		call	puts@PLT
+  92      00
+  25:lab7.c        ****     printArray(arr, 100);
+  93              		.loc 1 25 5
+  94 00ce 488D8560 		lea	rax, -416[rbp]
+  94      FEFFFF
+  95 00d5 BE640000 		mov	esi, 100
+  95      00
+  96 00da 4889C7   		mov	rdi, rax
+  97 00dd E8000000 		call	printArray
+  97      00
+  26:lab7.c        **** 
+  27:lab7.c        ****     printf("Number of swaps: %d\n",numSwaps);
+  98              		.loc 1 27 5
+  99 00e2 8B050000 		mov	eax, DWORD PTR numSwaps[rip]
+  99      0000
+ 100 00e8 89C6     		mov	esi, eax
+ 101 00ea 488D3D00 		lea	rdi, .LC2[rip]
+ 101      000000
+ 102 00f1 B8000000 		mov	eax, 0
+ 102      00
+ 103 00f6 E8000000 		call	printf@PLT
+ 103      00
+  28:lab7.c        **** 
+  29:lab7.c        ****     return 0;
+ 104              		.loc 1 29 12
+ 105 00fb B8000000 		mov	eax, 0
+ 105      00
+  30:lab7.c        **** }
+ 106              		.loc 1 30 1
+ 107 0100 488B75F8 		mov	rsi, QWORD PTR -8[rbp]
+ 108 0104 64483334 		xor	rsi, QWORD PTR fs:40
+ 108      25280000 
+ 108      00
+ 109 010d 7405     		je	.L5
+ 110 010f E8000000 		call	__stack_chk_fail@PLT
+ 110      00
+ 111              	.L5:
+ 112 0114 C9       		leave
+ 113              		.cfi_def_cfa 7, 8
+ 114 0115 C3       		ret
+ 115              		.cfi_endproc
+ 116              	.LFE6:
+ 118              		.section	.rodata
+ 119              	.LC3:
+ 120 0039 25642000 		.string	"%d "
+ 121              	.LC4:
+ 122 003d 0A00     		.string	"\n"
+ 123              		.text
+ 124              		.globl	printArray
+ 126              	printArray:
+ 127              	.LFB7:
+  31:lab7.c        **** 
+  32:lab7.c        **** void printArray(int arr[], int size){
+ 128              		.loc 1 32 37
+ 129              		.cfi_startproc
+ 130 0116 F30F1EFA 		endbr64
+ 131 011a 55       		push	rbp
+ 132              		.cfi_def_cfa_offset 16
+ 133              		.cfi_offset 6, -16
+ 134 011b 4889E5   		mov	rbp, rsp
+ 135              		.cfi_def_cfa_register 6
+ 136 011e 4883EC20 		sub	rsp, 32
+ 137 0122 48897DE8 		mov	QWORD PTR -24[rbp], rdi
+ 138 0126 8975E4   		mov	DWORD PTR -28[rbp], esi
+ 139              	.LBB3:
+  33:lab7.c        ****     for (int i = 0; i < size; i++){
+ 140              		.loc 1 33 14
+ 141 0129 C745FC00 		mov	DWORD PTR -4[rbp], 0
+ 141      000000
+ 142              		.loc 1 33 5
+ 143 0130 EB2D     		jmp	.L7
+ 144              	.L8:
+  34:lab7.c        ****         printf("%d ",arr[i]);
+ 145              		.loc 1 34 25 discriminator 3
+ 146 0132 8B45FC   		mov	eax, DWORD PTR -4[rbp]
+ 147 0135 4898     		cdqe
+ 148 0137 488D1485 		lea	rdx, 0[0+rax*4]
+ 148      00000000 
+ 149 013f 488B45E8 		mov	rax, QWORD PTR -24[rbp]
+ 150 0143 4801D0   		add	rax, rdx
+ 151              		.loc 1 34 9 discriminator 3
+ 152 0146 8B00     		mov	eax, DWORD PTR [rax]
+ 153 0148 89C6     		mov	esi, eax
+ 154 014a 488D3D00 		lea	rdi, .LC3[rip]
+ 154      000000
+ 155 0151 B8000000 		mov	eax, 0
+ 155      00
+ 156 0156 E8000000 		call	printf@PLT
+ 156      00
+  33:lab7.c        ****     for (int i = 0; i < size; i++){
+ 157              		.loc 1 33 32 discriminator 3
+ 158 015b 8345FC01 		add	DWORD PTR -4[rbp], 1
+ 159              	.L7:
+  33:lab7.c        ****     for (int i = 0; i < size; i++){
+ 160              		.loc 1 33 5 discriminator 1
+ 161 015f 8B45FC   		mov	eax, DWORD PTR -4[rbp]
+ 162 0162 3B45E4   		cmp	eax, DWORD PTR -28[rbp]
+ 163 0165 7CCB     		jl	.L8
+ 164              	.LBE3:
+  35:lab7.c        ****     }
+  36:lab7.c        ****     printf("\n\n");
+ 165              		.loc 1 36 5
+ 166 0167 488D3D00 		lea	rdi, .LC4[rip]
+ 166      000000
+ 167 016e E8000000 		call	puts@PLT
+ 167      00
+  37:lab7.c        **** }
+ 168              		.loc 1 37 1
+ 169 0173 90       		nop
+ 170 0174 C9       		leave
+ 171              		.cfi_def_cfa 7, 8
+ 172 0175 C3       		ret
+ 173              		.cfi_endproc
+ 174              	.LFE7:
+ 176              		.globl	bubbleArray
+ 178              	bubbleArray:
+ 179              	.LFB8:
+  38:lab7.c        **** 
+  39:lab7.c        **** void bubbleArray(int arr[], int size){
+ 180              		.loc 1 39 38
+ 181              		.cfi_startproc
+ 182 0176 F30F1EFA 		endbr64
+ 183 017a 55       		push	rbp
+ 184              		.cfi_def_cfa_offset 16
+ 185              		.cfi_offset 6, -16
+ 186 017b 4889E5   		mov	rbp, rsp
+ 187              		.cfi_def_cfa_register 6
+ 188 017e 4883EC20 		sub	rsp, 32
+ 189 0182 48897DE8 		mov	QWORD PTR -24[rbp], rdi
+ 190 0186 8975E4   		mov	DWORD PTR -28[rbp], esi
+ 191              	.LBB4:
+  40:lab7.c        ****     for (int i = 0; i < size - 1; i++){
+ 192              		.loc 1 40 14
+ 193 0189 C745F800 		mov	DWORD PTR -8[rbp], 0
+ 193      000000
+ 194              		.loc 1 40 5
+ 195 0190 E98A0000 		jmp	.L10
+ 195      00
+ 196              	.L14:
+ 197              	.LBB5:
+  41:lab7.c        ****         for(int j = 0; j < size - i - 1; j++){
+ 198              		.loc 1 41 17
+ 199 0195 C745FC00 		mov	DWORD PTR -4[rbp], 0
+ 199      000000
+ 200              		.loc 1 41 9
+ 201 019c EB6F     		jmp	.L11
+ 202              	.L13:
+  42:lab7.c        ****             if(arr[j] > arr[j+1]){
+ 203              		.loc 1 42 19
+ 204 019e 8B45FC   		mov	eax, DWORD PTR -4[rbp]
+ 205 01a1 4898     		cdqe
+ 206 01a3 488D1485 		lea	rdx, 0[0+rax*4]
+ 206      00000000 
+ 207 01ab 488B45E8 		mov	rax, QWORD PTR -24[rbp]
+ 208 01af 4801D0   		add	rax, rdx
+ 209 01b2 8B10     		mov	edx, DWORD PTR [rax]
+ 210              		.loc 1 42 28
+ 211 01b4 8B45FC   		mov	eax, DWORD PTR -4[rbp]
+ 212 01b7 4898     		cdqe
+ 213 01b9 4883C001 		add	rax, 1
+ 214 01bd 488D0C85 		lea	rcx, 0[0+rax*4]
+ 214      00000000 
+ 215 01c5 488B45E8 		mov	rax, QWORD PTR -24[rbp]
+ 216 01c9 4801C8   		add	rax, rcx
+ 217 01cc 8B00     		mov	eax, DWORD PTR [rax]
+ 218              		.loc 1 42 15
+ 219 01ce 39C2     		cmp	edx, eax
+ 220 01d0 7E37     		jle	.L12
+  43:lab7.c        ****                 swap(&arr[j], &arr[j+1]);
+ 221              		.loc 1 43 35
+ 222 01d2 8B45FC   		mov	eax, DWORD PTR -4[rbp]
+ 223 01d5 4898     		cdqe
+ 224 01d7 4883C001 		add	rax, 1
+ 225 01db 488D1485 		lea	rdx, 0[0+rax*4]
+ 225      00000000 
+ 226              		.loc 1 43 17
+ 227 01e3 488B45E8 		mov	rax, QWORD PTR -24[rbp]
+ 228 01e7 4801C2   		add	rdx, rax
+ 229              		.loc 1 43 26
+ 230 01ea 8B45FC   		mov	eax, DWORD PTR -4[rbp]
+ 231 01ed 4898     		cdqe
+ 232 01ef 488D0C85 		lea	rcx, 0[0+rax*4]
+ 232      00000000 
+ 233              		.loc 1 43 17
+ 234 01f7 488B45E8 		mov	rax, QWORD PTR -24[rbp]
+ 235 01fb 4801C8   		add	rax, rcx
+ 236 01fe 4889D6   		mov	rsi, rdx
+ 237 0201 4889C7   		mov	rdi, rax
+ 238 0204 E8000000 		call	swap
+ 238      00
+ 239              	.L12:
+  41:lab7.c        ****         for(int j = 0; j < size - i - 1; j++){
+ 240              		.loc 1 41 43 discriminator 2
+ 241 0209 8345FC01 		add	DWORD PTR -4[rbp], 1
+ 242              	.L11:
+  41:lab7.c        ****         for(int j = 0; j < size - i - 1; j++){
+ 243              		.loc 1 41 33 discriminator 1
+ 244 020d 8B45E4   		mov	eax, DWORD PTR -28[rbp]
+ 245 0210 2B45F8   		sub	eax, DWORD PTR -8[rbp]
+  41:lab7.c        ****         for(int j = 0; j < size - i - 1; j++){
+ 246              		.loc 1 41 37 discriminator 1
+ 247 0213 83E801   		sub	eax, 1
+  41:lab7.c        ****         for(int j = 0; j < size - i - 1; j++){
+ 248              		.loc 1 41 9 discriminator 1
+ 249 0216 3945FC   		cmp	DWORD PTR -4[rbp], eax
+ 250 0219 7C83     		jl	.L13
+ 251              	.LBE5:
+  40:lab7.c        ****         for(int j = 0; j < size - i - 1; j++){
+ 252              		.loc 1 40 36 discriminator 2
+ 253 021b 8345F801 		add	DWORD PTR -8[rbp], 1
+ 254              	.L10:
+  40:lab7.c        ****         for(int j = 0; j < size - i - 1; j++){
+ 255              		.loc 1 40 30 discriminator 1
+ 256 021f 8B45E4   		mov	eax, DWORD PTR -28[rbp]
+ 257 0222 83E801   		sub	eax, 1
+  40:lab7.c        ****         for(int j = 0; j < size - i - 1; j++){
+ 258              		.loc 1 40 5 discriminator 1
+ 259 0225 3945F8   		cmp	DWORD PTR -8[rbp], eax
+ 260 0228 0F8C67FF 		jl	.L14
+ 260      FFFF
+ 261              	.LBE4:
+  44:lab7.c        ****             }
+  45:lab7.c        ****         }
+  46:lab7.c        ****     }
+  47:lab7.c        **** }
+ 262              		.loc 1 47 1
+ 263 022e 90       		nop
+ 264 022f 90       		nop
+ 265 0230 C9       		leave
+ 266              		.cfi_def_cfa 7, 8
+ 267 0231 C3       		ret
+ 268              		.cfi_endproc
+ 269              	.LFE8:
+ 271              		.globl	swap
+ 273              	swap:
+ 274              	.LFB9:
+  48:lab7.c        **** 
+  49:lab7.c        **** void swap(int *x, int *y){
+ 275              		.loc 1 49 26
+ 276              		.cfi_startproc
+ 277 0232 F30F1EFA 		endbr64
+ 278 0236 55       		push	rbp
+ 279              		.cfi_def_cfa_offset 16
+ 280              		.cfi_offset 6, -16
+ 281 0237 4889E5   		mov	rbp, rsp
+ 282              		.cfi_def_cfa_register 6
+ 283 023a 48897DE8 		mov	QWORD PTR -24[rbp], rdi
+ 284 023e 488975E0 		mov	QWORD PTR -32[rbp], rsi
+  50:lab7.c        ****     int temp = *x;
+ 285              		.loc 1 50 9
+ 286 0242 488B45E8 		mov	rax, QWORD PTR -24[rbp]
+ 287 0246 8B00     		mov	eax, DWORD PTR [rax]
+ 288 0248 8945FC   		mov	DWORD PTR -4[rbp], eax
+  51:lab7.c        ****     *x = *y;
+ 289              		.loc 1 51 10
+ 290 024b 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+ 291 024f 8B10     		mov	edx, DWORD PTR [rax]
+ 292              		.loc 1 51 8
+ 293 0251 488B45E8 		mov	rax, QWORD PTR -24[rbp]
+ 294 0255 8910     		mov	DWORD PTR [rax], edx
+  52:lab7.c        ****     *y = temp;
+ 295              		.loc 1 52 8
+ 296 0257 488B45E0 		mov	rax, QWORD PTR -32[rbp]
+ 297 025b 8B55FC   		mov	edx, DWORD PTR -4[rbp]
+ 298 025e 8910     		mov	DWORD PTR [rax], edx
+  53:lab7.c        ****     numSwaps = numSwaps + 1;
+ 299              		.loc 1 53 25
+ 300 0260 8B050000 		mov	eax, DWORD PTR numSwaps[rip]
+ 300      0000
+ 301 0266 83C001   		add	eax, 1
+ 302              		.loc 1 53 14
+ 303 0269 89050000 		mov	DWORD PTR numSwaps[rip], eax
+ 303      0000
+  54:lab7.c        **** }
+ 304              		.loc 1 54 1
+ 305 026f 90       		nop
+ 306 0270 5D       		pop	rbp
+ 307              		.cfi_def_cfa 7, 8
+ 308 0271 C3       		ret
+ 309              		.cfi_endproc
+ 310              	.LFE9:
+ 312              	.Letext0:
+ 313              		.file 2 "/usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h"
+ 314              		.file 3 "/usr/include/x86_64-linux-gnu/bits/types.h"
+ 315              		.file 4 "/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h"
+ 316              		.file 5 "/usr/include/x86_64-linux-gnu/bits/types/FILE.h"
+ 317              		.file 6 "/usr/include/stdio.h"
+ 318              		.file 7 "/usr/include/x86_64-linux-gnu/bits/sys_errlist.h"
+ 319              		.file 8 "/usr/include/time.h"
+ 1482              		.section	.note.gnu.property,"a"
+ 1483              		.align 8
+ 1484 0000 04000000 		.long	 1f - 0f
+ 1485 0004 10000000 		.long	 4f - 1f
+ 1486 0008 05000000 		.long	 5
+ 1487              	0:
+ 1488 000c 474E5500 		.string	 "GNU"
+ 1489              	1:
+ 1490              		.align 8
+ 1491 0010 020000C0 		.long	 0xc0000002
+ 1492 0014 04000000 		.long	 3f - 2f
+ 1493              	2:
+ 1494 0018 03000000 		.long	 0x3
+ 1495              	3:
+ 1496 001c 00000000 		.align 8
+ 1497              	4:

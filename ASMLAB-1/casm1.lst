@@ -1,0 +1,174 @@
+   1              		.file	"casm1.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.section	.rodata
+   6              		.align 8
+   7              	.LC0:
+   8 0000 0A546869 		.string	"\nThis is adding two 8 byte numbers:"
+   8      73206973 
+   8      20616464 
+   8      696E6720 
+   8      74776F20 
+   9              	.LC1:
+  10 0024 52657375 		.string	"Result after addition: %lx\n"
+  10      6C742061 
+  10      66746572 
+  10      20616464 
+  10      6974696F 
+  11              		.align 8
+  12              	.LC2:
+  13 0040 0A546869 		.string	"\nThis is subtracting two 8 byte numbers:"
+  13      73206973 
+  13      20737562 
+  13      74726163 
+  13      74696E67 
+  14 0069 00000000 		.align 8
+  14      000000
+  15              	.LC3:
+  16 0070 52657375 		.string	"Result after subtraction: %lx\n\n"
+  16      6C742061 
+  16      66746572 
+  16      20737562 
+  16      74726163 
+  17              		.text
+  18              		.globl	main
+  20              	main:
+  21              	.LFB6:
+  22              		.file 1 "casm1.c"
+   1:casm1.c       **** #include <stdio.h> 
+   2:casm1.c       **** #include <stdlib.h> 
+   3:casm1.c       **** 
+   4:casm1.c       **** //assembly call prototypes 
+   5:casm1.c       **** 
+   6:casm1.c       **** long addnumbers(long v1, long v2); 
+   7:casm1.c       **** long subtractnumbers(long v1, long v2);
+   8:casm1.c       **** 
+   9:casm1.c       **** int main(int argc, char **argv) 
+  10:casm1.c       **** {
+  23              		.loc 1 10 1
+  24              		.cfi_startproc
+  25 0000 F30F1EFA 		endbr64
+  26 0004 55       		push	rbp
+  27              		.cfi_def_cfa_offset 16
+  28              		.cfi_offset 6, -16
+  29 0005 4889E5   		mov	rbp, rsp
+  30              		.cfi_def_cfa_register 6
+  31 0008 4883EC30 		sub	rsp, 48
+  32 000c 897DDC   		mov	DWORD PTR -36[rbp], edi
+  33 000f 488975D0 		mov	QWORD PTR -48[rbp], rsi
+  11:casm1.c       ****     long val1=0, val2=0; 
+  34              		.loc 1 11 10
+  35 0013 48C745E8 		mov	QWORD PTR -24[rbp], 0
+  35      00000000 
+  36              		.loc 1 11 18
+  37 001b 48C745F0 		mov	QWORD PTR -16[rbp], 0
+  37      00000000 
+  12:casm1.c       ****     long result=0; 
+  38              		.loc 1 12 10
+  39 0023 48C745F8 		mov	QWORD PTR -8[rbp], 0
+  39      00000000 
+  13:casm1.c       ****     int i=0; 
+  40              		.loc 1 13 9
+  41 002b C745E400 		mov	DWORD PTR -28[rbp], 0
+  41      000000
+  14:casm1.c       **** 
+  15:casm1.c       ****     val1  = 0x0111111111111111; 
+  42              		.loc 1 15 11
+  43 0032 48B81111 		movabs	rax, 76861433640456465
+  43      11111111 
+  43      1101
+  44 003c 488945E8 		mov	QWORD PTR -24[rbp], rax
+  16:casm1.c       ****     val2  = 0x0111111111111111; 
+  45              		.loc 1 16 11
+  46 0040 488945F0 		mov	QWORD PTR -16[rbp], rax
+  17:casm1.c       **** 
+  18:casm1.c       ****     printf ("\nThis is adding two 8 byte numbers:\n"); 
+  47              		.loc 1 18 5
+  48 0044 488D3D00 		lea	rdi, .LC0[rip]
+  48      000000
+  49 004b E8000000 		call	puts@PLT
+  49      00
+  19:casm1.c       **** 
+  20:casm1.c       ****     result = addnumbers(val1, val2); 
+  50              		.loc 1 20 14
+  51 0050 488B55F0 		mov	rdx, QWORD PTR -16[rbp]
+  52 0054 488B45E8 		mov	rax, QWORD PTR -24[rbp]
+  53 0058 4889D6   		mov	rsi, rdx
+  54 005b 4889C7   		mov	rdi, rax
+  55 005e E8000000 		call	addnumbers@PLT
+  55      00
+  56 0063 488945F8 		mov	QWORD PTR -8[rbp], rax
+  21:casm1.c       ****     printf("Result after addition: %lx\n", result); 
+  57              		.loc 1 21 5
+  58 0067 488B45F8 		mov	rax, QWORD PTR -8[rbp]
+  59 006b 4889C6   		mov	rsi, rax
+  60 006e 488D3D00 		lea	rdi, .LC1[rip]
+  60      000000
+  61 0075 B8000000 		mov	eax, 0
+  61      00
+  62 007a E8000000 		call	printf@PLT
+  62      00
+  22:casm1.c       **** 
+  23:casm1.c       **** 
+  24:casm1.c       ****     printf ("\nThis is subtracting two 8 byte numbers:\n"); 
+  63              		.loc 1 24 5
+  64 007f 488D3D00 		lea	rdi, .LC2[rip]
+  64      000000
+  65 0086 E8000000 		call	puts@PLT
+  65      00
+  25:casm1.c       **** 
+  26:casm1.c       ****     result = subtractnumbers(val1, val2); 
+  66              		.loc 1 26 14
+  67 008b 488B55F0 		mov	rdx, QWORD PTR -16[rbp]
+  68 008f 488B45E8 		mov	rax, QWORD PTR -24[rbp]
+  69 0093 4889D6   		mov	rsi, rdx
+  70 0096 4889C7   		mov	rdi, rax
+  71 0099 E8000000 		call	subtractnumbers@PLT
+  71      00
+  72 009e 488945F8 		mov	QWORD PTR -8[rbp], rax
+  27:casm1.c       ****     printf("Result after subtraction: %lx\n\n", result); 
+  73              		.loc 1 27 5
+  74 00a2 488B45F8 		mov	rax, QWORD PTR -8[rbp]
+  75 00a6 4889C6   		mov	rsi, rax
+  76 00a9 488D3D00 		lea	rdi, .LC3[rip]
+  76      000000
+  77 00b0 B8000000 		mov	eax, 0
+  77      00
+  78 00b5 E8000000 		call	printf@PLT
+  78      00
+  28:casm1.c       **** 
+  29:casm1.c       ****     return 0; 
+  79              		.loc 1 29 12
+  80 00ba B8000000 		mov	eax, 0
+  80      00
+  30:casm1.c       **** }
+  81              		.loc 1 30 1
+  82 00bf C9       		leave
+  83              		.cfi_def_cfa 7, 8
+  84 00c0 C3       		ret
+  85              		.cfi_endproc
+  86              	.LFE6:
+  88              	.Letext0:
+  89              		.file 2 "/usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h"
+  90              		.file 3 "/usr/include/x86_64-linux-gnu/bits/types.h"
+  91              		.file 4 "/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h"
+  92              		.file 5 "/usr/include/x86_64-linux-gnu/bits/types/FILE.h"
+  93              		.file 6 "/usr/include/stdio.h"
+  94              		.file 7 "/usr/include/x86_64-linux-gnu/bits/sys_errlist.h"
+ 951              		.section	.note.gnu.property,"a"
+ 952              		.align 8
+ 953 0000 04000000 		.long	 1f - 0f
+ 954 0004 10000000 		.long	 4f - 1f
+ 955 0008 05000000 		.long	 5
+ 956              	0:
+ 957 000c 474E5500 		.string	 "GNU"
+ 958              	1:
+ 959              		.align 8
+ 960 0010 020000C0 		.long	 0xc0000002
+ 961 0014 04000000 		.long	 3f - 2f
+ 962              	2:
+ 963 0018 03000000 		.long	 0x3
+ 964              	3:
+ 965 001c 00000000 		.align 8
+ 966              	4:
